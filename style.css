@@ -171,7 +171,7 @@ html,body{
 
   background: transparent;
 
-  padding: 26px 34px 34px 34px;
+  padding: 42px 34px 34px 34px; /* ⬅️ increased top padding */
   overflow:hidden;
 }
 
