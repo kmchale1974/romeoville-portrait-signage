@@ -202,10 +202,20 @@ html,body{
   font-weight: 900;
   color: var(--ink);
   margin-bottom: 10px;
+
+  /* handle long titles like portrait-display */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;   /* 2 lines max */
+  overflow: hidden;
 }
 
 .event .meta{
   font-size: 20px;
+  font-weight: 400; /* regular */
   color: var(--muted);
   line-height: 1.35;
+  white-space: nowrap;        /* keeps lines clean like signage */
+  overflow: hidden;
+  text-overflow: ellipsis;    /* if location is crazy long */
 }
