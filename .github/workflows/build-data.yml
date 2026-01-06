@@ -1,4 +1,4 @@
-name: Build events.json + slides.json
+name: Build slides.json + weather.json
 
 on:
   workflow_dispatch:
@@ -24,16 +24,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
+          cache: "npm"
 
       - name: Install deps
         run: npm ci
 
-      #- name: Generate events.json
-      #  run: node scripts/generate-events.mjs
-
       - name: Generate slides.json
         run: node scripts/generate-slides.mjs
- 
+
       - name: Generate weather.json
         run: node scripts/generate-weather.mjs
 
@@ -49,5 +47,5 @@ jobs:
             exit 0
           fi
 
-          git commit -m "Auto-update events.json and slides.json"
+          git commit -m "Auto-update slides.json and weather.json"
           git push
