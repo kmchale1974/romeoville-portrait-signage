@@ -113,10 +113,13 @@ function renderEvents(events){
 
 async function loadEvents(){
   try{
-    const r = await fetch("https://kmchale1974.github.io/romeoville-events-portrait-display/data/events.json?ts=" + Date.now(), { cache:"no-store" });
+    const url = "https://kmchale1974.github.io/romeoville-events-portrait-display/events.json?ts=" + Date.now();
+    const r = await fetch(url, { cache:"no-store" });
     if(!r.ok) throw new Error("Events fetch failed: " + r.status);
+
     const events = await r.json();
     if(!Array.isArray(events)) throw new Error("events.json is not an array");
+
     renderEvents(events);
   }catch(e){
     console.warn(e);
