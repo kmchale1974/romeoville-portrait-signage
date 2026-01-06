@@ -1,0 +1,14 @@
+{
+  "name": "romeoville-portrait-signage",
+  "private": true,
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Romeoville portrait signage generator",
+  "scripts": {
+    "build:events": "node scripts/generate-events.mjs",
+    "build:slides": "node scripts/generate-slides.mjs"
+  },
+  "dependencies": {
+    "fast-xml-parser": "^4.5.3"
+  }
+}
