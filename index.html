@@ -3,41 +3,51 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Romeoville Signage</title>
+  <title>Romeoville Portrait Signage</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="stage">
-    <!-- Top: slideshow -->
-    <section id="slideshow">
+  <!-- Fixed 1080x1920 canvas that scales to any browser -->
+  <div id="stage" aria-label="Romeoville Signage">
+
+    <!-- Base layer from Illustrator (includes UPCOMING EVENTS text etc.) -->
+    <img id="baseLayer" src="assets/base-layer.png" alt="" />
+
+    <!-- Slideshow region: 1080x625 @ (0,0) -->
+    <section id="slideshow" aria-label="Slideshow">
       <img id="slideA" class="slide visible" alt="" />
       <img id="slideB" class="slide" alt="" />
     </section>
 
-    <!-- Middle: widgets strip -->
-    <section id="strip">
-      <div class="left">
-        <div class="tiny">ROMEOVILLE.ORG</div>
+    <!-- Weather widget region: 670x209 @ (0,627) -->
+    <section id="weatherWidget" aria-label="Weather">
+      <div class="weatherRow">
+        <div class="weatherIcon" id="weatherIcon">☀</div>
+        <div class="weatherTemp" id="temp">--°F</div>
       </div>
-
-      <div class="center">
-        <div id="weather">
-          <span id="weatherIcon">☀</span>
-          <span id="temp">--°F</span>
-        </div>
-      </div>
-
-      <div class="right">
-        <div id="dateLine">December 17th 2025</div>
-        <div id="timeLine">3:29</div>
+      <div class="weatherMeta">
+        <div class="weatherLine" id="weatherDesc">ROMEOVILLE</div>
       </div>
     </section>
 
-    <!-- Bottom: events -->
-    <section id="events">
-      <img id="eventsHeader" src="assets/upcoming-events-bar.png" alt="Upcoming Events" />
+    <!-- Date widget: 465x48 @ (615,674) -->
+    <section id="dateWidget" aria-label="Date">
+      <div id="dateLine">December 17th 2025</div>
+    </section>
+
+    <!-- Time widget: 173x81 @ (764,720) -->
+    <section id="timeWidget" aria-label="Time">
+      <div id="timeLine">3:29</div>
+    </section>
+
+    <!-- White divider line: 1080x6 @ (0,836) -->
+    <div id="divider" aria-hidden="true"></div>
+
+    <!-- Events region: 1080x960 @ (0,960) -->
+    <section id="events" aria-label="Upcoming Events">
       <div id="eventsList"></div>
     </section>
+
   </div>
 
   <script src="app.js"></script>
