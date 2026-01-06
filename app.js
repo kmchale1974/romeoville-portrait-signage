@@ -139,7 +139,73 @@ function escapeHtml(s){
     .replaceAll('"',"&quot;")
     .replaceAll("'","&#039;");
 }
+// ===== Events pagination (4 per page, up to 32 total) =====
+const EVENTS_PER_PAGE = 4;
+const EVENTS_MAX = 32;
+const EVENTS_PAGE_SECONDS = 15; // change to 20 if you want
 
+let eventsCache = [];
+let eventsPageIndex = 0;
+
+function normalizeEvent(ev){
+  // Support a couple possible shapes without breaking
+  return {
+    title: ev.title ?? ev.name ?? "",
+    date: ev.date ?? ev.displayDate ?? "",
+    time: ev.time ?? ev.displayTime ?? "",
+    location: ev.location ?? ev.venue ?? "",
+  };
+}
+
+function renderEventsPage(){
+  const list = document.getElementById("eventsList");
+  if (!list) return;
+
+  // Clamp total events
+  const total = eventsCache.slice(0, EVENTS_MAX);
+  if (total.length === 0){
+    list.innerHTML = "";
+    return;
+  }
+
+  const pages = Math.ceil(total.length / EVENTS_PER_PAGE);
+  if (eventsPageIndex >= pages) eventsPageIndex = 0;
+
+  const start = eventsPageIndex * EVENTS_PER_PAGE;
+  const pageItems = total.slice(start, start + EVENTS_PER_PAGE).map(normalizeEvent);
+
+  // Fade out -> swap -> fade in
+  list.classList.remove("fadeIn");
+  list.classList.add("fadeOut");
+
+  window.setTimeout(() => {
+    list.innerHTML = "";
+
+    pageItems.forEach(ev => {
+      const card = document.createElement("div");
+      card.className = "event";
+      card.innerHTML = `
+        <div class="title">${escapeHtml(ev.title)}</div>
+        ${ev.date ? `<div class="meta">Date: ${escapeHtml(ev.date)}</div>` : ``}
+        ${ev.time ? `<div class="meta">Time: ${escapeHtml(ev.time)}</div>` : ``}
+        ${ev.location ? `<div class="meta">Location: ${escapeHtml(ev.location)}</div>` : ``}
+      `;
+      list.appendChild(card);
+    });
+
+    list.classList.remove("fadeOut");
+    list.classList.add("fadeIn");
+
+    // advance for next time
+    eventsPageIndex = (eventsPageIndex + 1) % pages;
+  }, 350);
+}
+
+let eventsPagerTimer = null;
+function startEventsPager(){
+  if (eventsPagerTimer) clearInterval(eventsPagerTimer);
+  eventsPagerTimer = setInterval(renderEventsPage, EVENTS_PAGE_SECONDS * 1000);
+}
 // ==============================
 // 6) Slideshow (reads data/slides.json)
 // slides.json example:
