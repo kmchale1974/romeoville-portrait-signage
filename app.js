@@ -49,39 +49,71 @@ setInterval(tickClock, 1000);
 // 4) Weather (Open-Meteo, no API key)
 // ==============================
 async function loadWeather(){
+  const tempEl = document.getElementById('temp');
+  const iconEl = document.getElementById('weatherIcon');
+  const descEl = document.getElementById('weatherDesc');
+
+  // If the elements aren't on the page yet, bail safely.
+  if (!tempEl || !iconEl) return;
+
   // Romeoville approx
-  const url =
+  const urlNew =
     "https://api.open-meteo.com/v1/forecast" +
     "?latitude=41.65&longitude=-88.09" +
     "&current=temperature_2m,weather_code" +
     "&temperature_unit=fahrenheit" +
     "&timezone=auto";
 
-  try{
-    const r = await fetch(url, { cache:"no-store" });
-    if(!r.ok) throw new Error("Weather fetch failed: " + r.status);
-    const j = await r.json();
+  const urlOld =
+    "https://api.open-meteo.com/v1/forecast" +
+    "?latitude=41.65&longitude=-88.09" +
+    "&current_weather=true" +
+    "&temperature_unit=fahrenheit" +
+    "&timezone=auto";
 
-    const t = Math.round(j.current.temperature_2m);
-    const tempEl = document.getElementById('temp');
-    if (tempEl) tempEl.textContent = `${t}°F`;
-
-    const code = j.current.weather_code;
-    const icon =
-      (code === 0) ? "☀" :
+  function iconFromCode(code){
+    return (code === 0) ? "☀" :
       ([1,2,3].includes(code)) ? "⛅" :
       ([45,48].includes(code)) ? "🌫" :
       ([51,53,55,61,63,65,80,81,82].includes(code)) ? "🌧" :
       ([71,73,75,77,85,86].includes(code)) ? "❄" :
       ([95,96,99].includes(code)) ? "⛈" : "🌡";
+  }
 
-    const iconEl = document.getElementById('weatherIcon');
-    if (iconEl) iconEl.textContent = icon;
+  try{
+    // Try new API shape first
+    let r = await fetch(urlNew, { cache:"no-store" });
+    if (!r.ok) throw new Error("Weather (new) HTTP " + r.status);
+    let j = await r.json();
 
-    const descEl = document.getElementById('weatherDesc');
+    if (j?.current?.temperature_2m == null) throw new Error("Weather (new) missing current.temperature_2m");
+
+    const t = Math.round(j.current.temperature_2m);
+    tempEl.textContent = `${t}°F`;
+    iconEl.textContent = iconFromCode(j.current.weather_code ?? 0);
     if (descEl) descEl.textContent = "ROMEOVILLE";
-  }catch(e){
-    console.warn(e);
+    return;
+  }catch(errNew){
+    console.warn("Open-Meteo new format failed:", errNew);
+  }
+
+  try{
+    // Fall back to old API shape
+    let r = await fetch(urlOld, { cache:"no-store" });
+    if (!r.ok) throw new Error("Weather (old) HTTP " + r.status);
+    let j = await r.json();
+
+    if (j?.current_weather?.temperature == null) throw new Error("Weather (old) missing current_weather.temperature");
+
+    const t = Math.round(j.current_weather.temperature);
+    tempEl.textContent = `${t}°F`;
+    // old format doesn't provide the same code set; keep existing icon or show thermometer
+    iconEl.textContent = "🌡";
+    if (descEl) descEl.textContent = "ROMEOVILLE";
+  }catch(errOld){
+    console.warn("Open-Meteo old format failed:", errOld);
+    // Keep whatever is currently shown, but make it obvious it's unavailable
+    tempEl.textContent = `N/A`;
   }
 }
 loadWeather();
