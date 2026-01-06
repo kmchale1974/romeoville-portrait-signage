@@ -37,9 +37,10 @@ function formatDateWithOrdinal(d){
 
 function tickClock(){
   const now = new Date();
-  document.getElementById('dateLine').textContent = formatDateWithOrdinal(now);
-  document.getElementById('timeLine').textContent =
-    now.toLocaleTimeString([], { hour:'numeric', minute:'2-digit' });
+  const dateEl = document.getElementById('dateLine');
+  const timeEl = document.getElementById('timeLine');
+  if (dateEl) dateEl.textContent = formatDateWithOrdinal(now);
+  if (timeEl) timeEl.textContent = now.toLocaleTimeString([], { hour:'numeric', minute:'2-digit' });
 }
 tickClock();
 setInterval(tickClock, 1000);
@@ -62,7 +63,8 @@ async function loadWeather(){
     const j = await r.json();
 
     const t = Math.round(j.current.temperature_2m);
-    document.getElementById('temp').textContent = `${t}°F`;
+    const tempEl = document.getElementById('temp');
+    if (tempEl) tempEl.textContent = `${t}°F`;
 
     const code = j.current.weather_code;
     const icon =
@@ -73,10 +75,12 @@ async function loadWeather(){
       ([71,73,75,77,85,86].includes(code)) ? "❄" :
       ([95,96,99].includes(code)) ? "⛈" : "🌡";
 
-    document.getElementById('weatherIcon').textContent = icon;
-    document.getElementById('weatherDesc').textContent = "ROMEOVILLE";
+    const iconEl = document.getElementById('weatherIcon');
+    if (iconEl) iconEl.textContent = icon;
+
+    const descEl = document.getElementById('weatherDesc');
+    if (descEl) descEl.textContent = "ROMEOVILLE";
   }catch(e){
-    // keep last known values; just avoid crashing signage
     console.warn(e);
   }
 }
@@ -84,53 +88,8 @@ loadWeather();
 setInterval(loadWeather, 10 * 60 * 1000); // every 10 minutes
 
 // ==============================
-// 5) Events list (reads data/events.json)
-// Expected shape (example):
-// [
-//   {"title":"Village Board Meeting","date":"Wed, Feb 18, 2026","time":"6:00 PM - 8:00 PM","location":"Village Board Room"},
-//   ...
-// ]
+// 5) HTML escaping helper
 // ==============================
-function renderEvents(events){
-  const list = document.getElementById('eventsList');
-  list.innerHTML = "";
-
-  // choose how many show at once
-  const visible = events.slice(0, 4);
-
-  visible.forEach(ev => {
-    const card = document.createElement('div');
-    card.className = "event fadeIn";
-    card.innerHTML = `
-      <div class="title">${escapeHtml(ev.title ?? "")}</div>
-      <div class="meta">Date: ${escapeHtml(ev.date ?? "—")}</div>
-      <div class="meta">Time: ${escapeHtml(ev.time ?? "—")}</div>
-      ${ev.location ? `<div class="meta">Location: ${escapeHtml(ev.location)}</div>` : ``}
-    `;
-    list.appendChild(card);
-  });
-}
-
-async function loadEvents(){
-  try{
-    const url =
-      "https://kmchale1974.github.io/romeoville-events-portrait-display/events.json?ts=" +
-      Date.now();
-
-    const r = await fetch(url, { cache:"no-store" });
-    if(!r.ok) throw new Error("Events fetch failed: " + r.status);
-
-    const events = await r.json();
-    if(!Array.isArray(events)) throw new Error("events.json is not an array");
-
-    renderEvents(events);
-  }catch(e){
-    console.warn(e);
-  }
-}
-loadEvents();
-setInterval(loadEvents, 60 * 60 * 1000); // hourly
-
 function escapeHtml(s){
   return String(s)
     .replaceAll("&","&amp;")
@@ -139,13 +98,17 @@ function escapeHtml(s){
     .replaceAll('"',"&quot;")
     .replaceAll("'","&#039;");
 }
-// ===== Events pagination (4 per page, up to 32 total) =====
+
+// ==============================
+// 6) EVENTS: Pull from the known-good repo, paginate 4/page up to 32 total
+// ==============================
 const EVENTS_PER_PAGE = 4;
 const EVENTS_MAX = 32;
-const EVENTS_PAGE_SECONDS = 15; // change to 20 if you want
+const EVENTS_PAGE_SECONDS = 20;
 
 let eventsCache = [];
 let eventsPageIndex = 0;
+let eventsPagerTimer = null;
 
 function normalizeEvent(ev){
   // Support a couple possible shapes without breaking
@@ -154,6 +117,7 @@ function normalizeEvent(ev){
     date: ev.date ?? ev.displayDate ?? "",
     time: ev.time ?? ev.displayTime ?? "",
     location: ev.location ?? ev.venue ?? "",
+    link: ev.link ?? ""
   };
 }
 
@@ -161,7 +125,6 @@ function renderEventsPage(){
   const list = document.getElementById("eventsList");
   if (!list) return;
 
-  // Clamp total events
   const total = eventsCache.slice(0, EVENTS_MAX);
   if (total.length === 0){
     list.innerHTML = "";
@@ -184,6 +147,8 @@ function renderEventsPage(){
     pageItems.forEach(ev => {
       const card = document.createElement("div");
       card.className = "event";
+
+      // If you ever want titles clickable, we can enable links — keeping plain for signage stability.
       card.innerHTML = `
         <div class="title">${escapeHtml(ev.title)}</div>
         ${ev.date ? `<div class="meta">Date: ${escapeHtml(ev.date)}</div>` : ``}
@@ -196,20 +161,42 @@ function renderEventsPage(){
     list.classList.remove("fadeOut");
     list.classList.add("fadeIn");
 
-    // advance for next time
     eventsPageIndex = (eventsPageIndex + 1) % pages;
   }, 350);
 }
 
-let eventsPagerTimer = null;
 function startEventsPager(){
   if (eventsPagerTimer) clearInterval(eventsPagerTimer);
   eventsPagerTimer = setInterval(renderEventsPage, EVENTS_PAGE_SECONDS * 1000);
 }
+
+async function loadEvents(){
+  try{
+    const url =
+      "https://kmchale1974.github.io/romeoville-events-portrait-display/events.json?ts=" +
+      Date.now();
+
+    const r = await fetch(url, { cache:"no-store" });
+    if(!r.ok) throw new Error("Events fetch failed: " + r.status);
+
+    const events = await r.json();
+    if(!Array.isArray(events)) throw new Error("events.json is not an array");
+
+    eventsCache = events.slice(0, EVENTS_MAX);
+    eventsPageIndex = 0;
+
+    renderEventsPage();
+    startEventsPager();
+  }catch(e){
+    console.warn(e);
+  }
+}
+
+loadEvents();
+setInterval(loadEvents, 60 * 60 * 1000); // hourly refresh from source
+
 // ==============================
-// 6) Slideshow (reads data/slides.json)
-// slides.json example:
-// ["slides/001.jpg","slides/002.jpg","slides/003.jpg"]
+// 7) Slideshow (kept as-is; will work once data/slides.json has real images)
 // ==============================
 let slides = [];
 let idx = 0;
@@ -235,11 +222,11 @@ function showNextSlide(){
 
   const a = document.getElementById('slideA');
   const b = document.getElementById('slideB');
+  if (!a || !b) return;
 
   const incoming = showingA ? b : a;
   const outgoing = showingA ? a : b;
 
-  // preload by setting src, then fade
   incoming.src = nextSrc;
   incoming.classList.add('visible');
   outgoing.classList.remove('visible');
@@ -250,6 +237,6 @@ function showNextSlide(){
 (async () => {
   await loadSlides();
   showNextSlide();
-  setInterval(showNextSlide, 15000);       // 15s per slide (adjust to match your playlist)
-  setInterval(loadSlides, 5 * 60 * 1000);  // refresh slide list
+  setInterval(showNextSlide, 15000);
+  setInterval(loadSlides, 5 * 60 * 1000);
 })();
