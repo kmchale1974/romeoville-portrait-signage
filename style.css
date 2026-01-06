@@ -127,4 +127,92 @@ html,body{
 
   color:#fff;
   background: transparent;
-  overflow:h
+  overflow:hidden;
+}
+#dateLine{
+  font-size:30px;
+  font-weight:800;
+  white-space:nowrap;
+}
+
+/* --- Time widget: 173x81 @ 764,720 --- */
+#timeWidget{
+  position:absolute;
+  left:764px;
+  top:720px;
+  width:173px;
+  height:81px;
+  z-index:3;
+
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  padding-right:24px;
+
+  color:#fff;
+  background: transparent;
+  overflow:hidden;
+}
+#timeLine{
+  font-size:34px;
+  font-weight:700;
+  white-space:nowrap;
+}
+
+/* --- Divider: 1080x6 @ 0,836 --- */
+#divider{
+  position:absolute;
+  left:0;
+  top:836px;
+  width:1080px;
+  height:6px;
+  background: var(--divider);
+  z-index:4;
+}
+
+/* --- Events region: 1080x960 @ 0,960 --- */
+#events{
+  position:absolute;
+  left:0;
+  top:960px;
+  width:1080px;
+  height:960px;
+  z-index:2;
+
+  /* Keep transparent if base layer includes the panel */
+  background: transparent;
+
+  padding: 26px 34px 34px 34px;
+  overflow:hidden;
+}
+
+/* Event cards */
+.event{
+  background: var(--eventsCard);
+  border-radius: 12px;
+  padding: 18px 20px;
+  margin: 16px 0;
+  box-shadow: 0 1px 0 rgba(0,0,0,.10);
+}
+
+.event .title{
+  font-size: 30px;
+  font-weight: 900;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+
+.event .meta{
+  font-size: 20px;
+  color: var(--muted);
+  line-height: 1.35;
+}
+
+/* Optional: fade-in when events refresh */
+.fadeIn{
+  animation: fadeIn 600ms ease both;
+}
+@keyframes fadeIn{
+  from{ opacity:0; transform: translateY(6px); }
+  to{ opacity:1; transform: translateY(0); }
+}
