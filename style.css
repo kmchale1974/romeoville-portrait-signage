@@ -169,9 +169,9 @@ html,body{
   height:960px;
   z-index:2;
 
-  background: transparent;
+  background: #ffffff;   /* ⬅️ make whole area white */
 
-  padding: 42px 34px 34px 34px; /* ⬅️ increased top padding */
+  padding: 42px 34px 34px 34px;
   overflow:hidden;
 }
 
