@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Romeoville Signage</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="stage">
+    <!-- Top: slideshow -->
+    <section id="slideshow">
+      <img id="slideA" class="slide visible" alt="" />
+      <img id="slideB" class="slide" alt="" />
+    </section>
+
+    <!-- Middle: widgets strip -->
+    <section id="strip">
+      <div class="left">
+        <div class="tiny">ROMEOVILLE.ORG</div>
+      </div>
+
+      <div class="center">
+        <div id="weather">
+          <span id="weatherIcon">☀</span>
+          <span id="temp">--°F</span>
+        </div>
+      </div>
+
+      <div class="right">
+        <div id="dateLine">December 17th 2025</div>
+        <div id="timeLine">3:29</div>
+      </div>
+    </section>
+
+    <!-- Bottom: events -->
+    <section id="events">
+      <img id="eventsHeader" src="assets/upcoming-events-bar.png" alt="Upcoming Events" />
+      <div id="eventsList"></div>
+    </section>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
