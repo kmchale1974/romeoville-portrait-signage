@@ -190,11 +190,15 @@ html,body{
 
 /* Event cards */
 .event{
-  background: var(--eventsCard);
-  border-radius: 12px;
-  padding: 18px 20px;
-  margin: 16px 0;
-  box-shadow: 0 1px 0 rgba(0,0,0,.10);
+  background: transparent;   /* ⬅️ blend into white panel */
+  border-radius: 0;          /* ⬅️ no pill look */
+  padding: 14px 0;           /* vertical spacing only */
+  margin: 0;
+  box-shadow: none;
+}
+
+.event + .event{
+  border-top: 1px solid #e5e7eb; /* light gray divider */
 }
 
 .event .title{
