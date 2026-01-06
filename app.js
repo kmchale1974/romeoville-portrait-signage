@@ -113,7 +113,10 @@ function renderEvents(events){
 
 async function loadEvents(){
   try{
-    const url = "https://kmchale1974.github.io/romeoville-events-portrait-display/events.json?ts=" + Date.now();
+    const url =
+      "https://kmchale1974.github.io/romeoville-events-portrait-display/events.json?ts=" +
+      Date.now();
+
     const r = await fetch(url, { cache:"no-store" });
     if(!r.ok) throw new Error("Events fetch failed: " + r.status);
 
