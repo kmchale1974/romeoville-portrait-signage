@@ -2,14 +2,11 @@
   --w:1080px;
   --h:1920px;
 
-  /* You can tweak these if your Illustrator base layer already includes them */
   --divider:#ffffff;
-  --eventsPaper:#eef2f7;
   --eventsCard:#f8fafc;
   --ink:#0f172a;
   --muted:#475569;
 
-  /* scale factor (computed in JS) */
   --scale:1;
 }
 
@@ -32,7 +29,7 @@ html,body{
   transform: translate(-50%,-50%) scale(var(--scale));
   transform-origin: center center;
   overflow:hidden;
-  background:#0b4ea2; /* fallback if base layer missing */
+  background:#0b4ea2;
 }
 
 /* Base Illustrator layer */
@@ -79,7 +76,6 @@ html,body{
   height:209px;
   z-index:3;
 
-  /* If your base layer already has the blue panel, keep this transparent */
   background: transparent;
 
   display:flex;
@@ -95,16 +91,10 @@ html,body{
   gap:18px;
   line-height:1;
 }
-.weatherIcon{
-  font-size:64px;
-}
-.weatherTemp{
-  font-size:64px;
-  font-weight:800;
-}
-.weatherMeta{
-  margin-top:10px;
-}
+.weatherIcon{ font-size:64px; }
+.weatherTemp{ font-size:64px; font-weight:800; }
+
+.weatherMeta{ margin-top:10px; }
 .weatherLine{
   font-size:22px;
   opacity:.9;
@@ -179,11 +169,23 @@ html,body{
   height:960px;
   z-index:2;
 
-  /* Keep transparent if base layer includes the panel */
   background: transparent;
 
   padding: 26px 34px 34px 34px;
   overflow:hidden;
+}
+
+/* Events list fade */
+#eventsList{
+  opacity: 1;
+}
+#eventsList.fadeOut{
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+#eventsList.fadeIn{
+  opacity: 1;
+  transition: opacity 500ms ease;
 }
 
 /* Event cards */
@@ -206,13 +208,4 @@ html,body{
   font-size: 20px;
   color: var(--muted);
   line-height: 1.35;
-}
-
-/* Optional: fade-in when events refresh */
-.fadeIn{
-  animation: fadeIn 600ms ease both;
-}
-@keyframes fadeIn{
-  from{ opacity:0; transform: translateY(6px); }
-  to{ opacity:1; transform: translateY(0); }
 }
