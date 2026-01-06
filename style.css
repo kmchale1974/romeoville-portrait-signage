@@ -37,8 +37,8 @@ html,body{
   position:absolute;
   left:0;
   top:0;
-  width:var(--w);
-  height:var(--h);
+  width:1080px;
+  height:1920px;
   object-fit:cover;
   z-index:0;
   pointer-events:none;
