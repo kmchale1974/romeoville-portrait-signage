@@ -33,6 +33,9 @@ jobs:
 
       - name: Generate slides.json
         run: node scripts/generate-slides.mjs
+ 
+      - name: Generate weather.json
+        run: node scripts/generate-weather.mjs
 
       - name: Commit & push if changed
         run: |
