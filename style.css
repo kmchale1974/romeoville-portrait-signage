@@ -3,7 +3,6 @@
   --h:1920px;
 
   --divider:#ffffff;
-  --eventsCard:#f8fafc;
   --ink:#0f172a;
   --muted:#475569;
 
@@ -45,7 +44,9 @@ html,body{
   user-select:none;
 }
 
-/* --- Slideshow: 1080x625 @ 0,0 --- */
+/* ==============================
+   SLIDESHOW (kept for later)
+   ============================== */
 #slideshow{
   position:absolute;
   left:0;
@@ -67,9 +68,10 @@ html,body{
 }
 .slide.visible{ opacity:1; }
 
-/* --- Weather widget: 670x209 @ 0,627 --- */
+/* ==============================
+   WEATHER
+   ============================== */
 #weatherWidget{
-  #weatherWidget{
   position:absolute;
   left:0;
   top:627px;
@@ -77,14 +79,13 @@ html,body{
   height:209px;
   z-index:3;
 
-  background: transparent;
-  color:#fff;
-
   display:flex;
   flex-direction:column;
   justify-content:center;
 
-  padding:24px 48px; /* ⬅️ more even inset */
+  padding:24px 48px;   /* even inset */
+  color:#fff;
+  background: transparent;
 }
 
 .weatherRow{
@@ -93,6 +94,7 @@ html,body{
   gap:18px;
   line-height:1;
 }
+
 .weatherIcon{ font-size:64px; }
 .weatherTemp{ font-size:64px; font-weight:800; }
 
@@ -103,7 +105,9 @@ html,body{
   letter-spacing:.5px;
 }
 
-/* --- Date widget: 465x48 @ 615,674 --- */
+/* ==============================
+   DATE
+   ============================== */
 #dateWidget{
   position:absolute;
   left:615px;
@@ -114,46 +118,54 @@ html,body{
 
   display:flex;
   align-items:center;
-  justify-content:center;  /* ⬅️ center */
-  padding:0;               /* ⬅️ no edge padding */
+  justify-content:center;
 
   color:#fff;
   background: transparent;
   overflow:hidden;
   text-align:center;
 }
+
 #dateLine{
+  width:100%;
+  text-align:center;
   font-size:30px;
   font-weight:800;
   white-space:nowrap;
 }
 
-/* --- Time widget: 173x81 @ 764,720 --- */
+/* ==============================
+   TIME
+   ============================== */
 #timeWidget{
   position:absolute;
-  left:615px;     /* ⬅️ was 764 */
+  left:615px;
   top:720px;
-  width:465px;    /* ⬅️ was 173 */
+  width:465px;
   height:81px;
   z-index:3;
 
   display:flex;
   align-items:center;
-  justify-content:center; /* ⬅️ center */
-  padding:0;
+  justify-content:center;
 
   color:#fff;
   background: transparent;
   overflow:hidden;
   text-align:center;
 }
+
 #timeLine{
+  width:100%;
+  text-align:center;
   font-size:34px;
   font-weight:700;
   white-space:nowrap;
 }
 
-/* --- Divider: 1080x6 @ 0,836 --- */
+/* ==============================
+   DIVIDER
+   ============================== */
 #divider{
   position:absolute;
   left:0;
@@ -164,7 +176,9 @@ html,body{
   z-index:4;
 }
 
-/* --- Events region: 1080x960 @ 0,960 --- */
+/* ==============================
+   EVENTS AREA
+   ============================== */
 #events{
   position:absolute;
   left:0;
@@ -173,57 +187,58 @@ html,body{
   height:960px;
   z-index:2;
 
-  background: #ffffff;   /* ⬅️ make whole area white */
-
-  padding: 42px 34px 34px 34px;
+  background:#ffffff;    /* full white like other repo */
+  padding:42px 34px 34px 34px;
   overflow:hidden;
 }
 
-/* Events list fade */
+/* fade animation */
 #eventsList{
-  opacity: 1;
-}
-#eventsList.fadeOut{
-  opacity: 0;
-  transition: opacity 300ms ease;
-}
-#eventsList.fadeIn{
-  opacity: 1;
-  transition: opacity 500ms ease;
+  opacity:1;
 }
 
-/* Event cards */
+#eventsList.fadeOut{
+  opacity:0;
+  transition:opacity 300ms ease;
+}
+
+#eventsList.fadeIn{
+  opacity:1;
+  transition:opacity 500ms ease;
+}
+
+/* ==============================
+   EVENT ROWS (flat list)
+   ============================== */
 .event{
-  background: transparent;   /* ⬅️ blend into white panel */
-  border-radius: 0;          /* ⬅️ no pill look */
-  padding: 14px 0;           /* vertical spacing only */
-  margin: 0;
-  box-shadow: none;
+  background:transparent;
+  padding:14px 0;
 }
 
 .event + .event{
-  border-top: 1px solid #e5e7eb; /* light gray divider */
+  border-top:1px solid #e5e7eb;
 }
 
+/* title: bold, clamp to 2 lines */
 .event .title{
-  font-size: 30px;
-  font-weight: 900;
-  color: var(--ink);
-  margin-bottom: 10px;
+  font-size:30px;
+  font-weight:900;
+  color:var(--ink);
+  margin-bottom:8px;
 
-  /* handle long titles like portrait-display */
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;   /* 2 lines max */
-  overflow: hidden;
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2;
+  overflow:hidden;
 }
 
+/* meta: regular weight */
 .event .meta{
-  font-size: 20px;
-  font-weight: 400; /* regular */
-  color: var(--muted);
-  line-height: 1.35;
-  white-space: nowrap;        /* keeps lines clean like signage */
-  overflow: hidden;
-  text-overflow: ellipsis;    /* if location is crazy long */
+  font-size:20px;
+  font-weight:400;
+  color:var(--muted);
+  line-height:1.35;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
