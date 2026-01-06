@@ -100,32 +100,92 @@ function escapeHtml(s){
 }
 
 // ==============================
-// 6) EVENTS: Pull from the known-good repo, paginate 4/page up to 32 total
+// 6) EVENTS: Pull from the known-good repo and render like portrait-display
+// - 4 per page
+// - up to 32 total
+// - only within next 4 months
+// - auto-advance every 20s with fade
 // ==============================
 const EVENTS_PER_PAGE = 4;
 const EVENTS_MAX = 32;
 const EVENTS_PAGE_SECONDS = 20;
+const EVENTS_MONTHS_AHEAD = 4;
 
 let eventsCache = [];
 let eventsPageIndex = 0;
 let eventsPagerTimer = null;
 
+function parseDateSafe(iso){
+  const d = new Date(iso);
+  return Number.isNaN(d.getTime()) ? null : d;
+}
+
+function addMonths(date, months){
+  const d = new Date(date);
+  d.setMonth(d.getMonth() + months);
+  return d;
+}
+
+function formatDateLine(startDate){
+  // Example: "Fri, Jan 9"
+  return startDate.toLocaleDateString(undefined, {
+    weekday: "short",
+    month: "short",
+    day: "numeric"
+  });
+}
+
+function formatTimeLine(startDate, endDate){
+  // Example: "5:00 PM – 11:59 PM"
+  const fmt = (d) =>
+    d.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+
+  // If end is missing, just show start time
+  if (!endDate) return fmt(startDate);
+
+  // If start/end are identical or very close, show just start
+  if (Math.abs(endDate.getTime() - startDate.getTime()) < 60 * 1000) return fmt(startDate);
+
+  return `${fmt(startDate)} – ${fmt(endDate)}`;
+}
+
 function normalizeEvent(ev){
-  // Support a couple possible shapes without breaking
+  // Source JSON shape (from portrait-display):
+  // { title, start, end, location }
+  const start = parseDateSafe(ev.start);
+  const end = parseDateSafe(ev.end);
+
   return {
-    title: ev.title ?? ev.name ?? "",
-    date: ev.date ?? ev.displayDate ?? "",
-    time: ev.time ?? ev.displayTime ?? "",
-    location: ev.location ?? ev.venue ?? "",
-    link: ev.link ?? ""
+    title: ev.title ?? "",
+    start,
+    end,
+    location: ev.location ?? ""
   };
+}
+
+function withinWindow(start, now, maxDate){
+  if (!start) return false;
+  return start.getTime() >= now.getTime() && start.getTime() <= maxDate.getTime();
+}
+
+function buildEventsCache(raw){
+  const now = new Date();
+  const maxDate = addMonths(now, EVENTS_MONTHS_AHEAD);
+
+  const normalized = raw
+    .map(normalizeEvent)
+    .filter(e => e.title && e.start)                         // must have title + start
+    .filter(e => withinWindow(e.start, now, maxDate))        // next 4 months only
+    .sort((a, b) => a.start.getTime() - b.start.getTime());  // soonest first
+
+  return normalized.slice(0, EVENTS_MAX);
 }
 
 function renderEventsPage(){
   const list = document.getElementById("eventsList");
   if (!list) return;
 
-  const total = eventsCache.slice(0, EVENTS_MAX);
+  const total = eventsCache;
   if (total.length === 0){
     list.innerHTML = "";
     return;
@@ -134,8 +194,8 @@ function renderEventsPage(){
   const pages = Math.ceil(total.length / EVENTS_PER_PAGE);
   if (eventsPageIndex >= pages) eventsPageIndex = 0;
 
-  const start = eventsPageIndex * EVENTS_PER_PAGE;
-  const pageItems = total.slice(start, start + EVENTS_PER_PAGE).map(normalizeEvent);
+  const startIdx = eventsPageIndex * EVENTS_PER_PAGE;
+  const pageItems = total.slice(startIdx, startIdx + EVENTS_PER_PAGE);
 
   // Fade out -> swap -> fade in
   list.classList.remove("fadeIn");
@@ -145,16 +205,19 @@ function renderEventsPage(){
     list.innerHTML = "";
 
     pageItems.forEach(ev => {
+      const dateLine = formatDateLine(ev.start);
+      const timeLine = formatTimeLine(ev.start, ev.end);
+
       const card = document.createElement("div");
       card.className = "event";
 
-      // If you ever want titles clickable, we can enable links — keeping plain for signage stability.
       card.innerHTML = `
         <div class="title">${escapeHtml(ev.title)}</div>
-        ${ev.date ? `<div class="meta">Date: ${escapeHtml(ev.date)}</div>` : ``}
-        ${ev.time ? `<div class="meta">Time: ${escapeHtml(ev.time)}</div>` : ``}
+        <div class="meta">Date: ${escapeHtml(dateLine)}</div>
+        <div class="meta">Time: ${escapeHtml(timeLine)}</div>
         ${ev.location ? `<div class="meta">Location: ${escapeHtml(ev.location)}</div>` : ``}
       `;
+
       list.appendChild(card);
     });
 
@@ -179,10 +242,10 @@ async function loadEvents(){
     const r = await fetch(url, { cache:"no-store" });
     if(!r.ok) throw new Error("Events fetch failed: " + r.status);
 
-    const events = await r.json();
-    if(!Array.isArray(events)) throw new Error("events.json is not an array");
+    const raw = await r.json();
+    if(!Array.isArray(raw)) throw new Error("events.json is not an array");
 
-    eventsCache = events.slice(0, EVENTS_MAX);
+    eventsCache = buildEventsCache(raw);
     eventsPageIndex = 0;
 
     renderEventsPage();
@@ -193,7 +256,7 @@ async function loadEvents(){
 }
 
 loadEvents();
-setInterval(loadEvents, 60 * 60 * 1000); // hourly refresh from source
+setInterval(loadEvents, 60 * 60 * 1000); // refresh hourly
 
 // ==============================
 // 7) Slideshow (kept as-is; will work once data/slides.json has real images)
