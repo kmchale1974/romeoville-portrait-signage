@@ -140,7 +140,7 @@ html,body{
 #dateLine{
   width:100%;
   text-align:center;
-  font-size:30px;
+  font-size: 32px;   /* ⬆️ was 30 */
   font-weight:800;
   white-space:nowrap;
 }
@@ -148,7 +148,7 @@ html,body{
 #timeLine{
   width:100%;
   text-align:center;
-  font-size:34px;
+  font-size: 38px;   /* ⬆️ was 34 */
   font-weight:700;
   white-space:nowrap;
   margin-top:8px;
@@ -199,37 +199,40 @@ html,body{
 }
 
 /* ==============================
-   EVENT ROWS (flat list)
+   EVENT ROWS (match portrait-display / Yodeck feel)
    ============================== */
+
 .event{
   background:transparent;
-  padding:14px 0;
+  padding: 22px 0;              /* ⬆️ more vertical spacing */
 }
 
 .event + .event{
   border-top:1px solid #e5e7eb;
 }
 
-/* title: bold, clamp to 2 lines */
+/* Title: bigger, bold, 2-line clamp */
 .event .title{
-  font-size: 34px;        /* ⬆️ was 30px */
+  font-size: 38px;              /* ⬆️ was 34 */
   font-weight: 900;
   color: var(--ink);
-  margin-bottom: 10px;
-  line-height: 1.2;
+  margin-bottom: 12px;
+  line-height: 1.15;
 
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  overflow: hidden;
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2;
+  overflow:hidden;
 }
 
-/* meta: regular weight */
+/* Meta: slightly larger, regular */
 .event .meta{
-  font-size: 22px;        /* ⬆️ was 20px */
+  font-size: 24px;              /* ⬆️ was 22 */
   font-weight: 400;
   color: var(--muted);
-  line-height: 1.4;
+  line-height: 1.45;
+  margin-top: 3px;
+
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
