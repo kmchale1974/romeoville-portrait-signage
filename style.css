@@ -43,7 +43,7 @@ html,body{
 }
 
 /* ==============================
-   SLIDESHOW (kept for next phase)
+   SLIDESHOW (next phase)
    ============================== */
 #slideshow{
   position:absolute;
@@ -77,14 +77,14 @@ html,body{
   height:209px;
   z-index:3;
 
-  padding:24px 48px;
+  padding:24px 48px;      /* padded from edges */
   color:#fff;
   background: transparent;
 
   display:flex;
   align-items:center;
 
-  #weatherWidget{
+  /* Use Arial-like system font (matches Yodeck feel) */
   font-family: Arial, "Helvetica Neue", Helvetica, system-ui, sans-serif;
 }
 
@@ -123,7 +123,10 @@ html,body{
   line-height:1;
 }
 .weatherIcon{ font-size:64px; }
-.weatherTemp{ font-size:64px; font-weight:900; }
+.weatherTemp{
+  font-size:64px;
+  font-weight:700;
+}
 
 /* Right: date/time */
 .stripRight{
@@ -138,7 +141,7 @@ html,body{
   width:100%;
   text-align:center;
   font-size:32px;
-  font-weight:900;
+  font-weight:700;
   white-space:nowrap;
 }
 #timeLine{
@@ -174,11 +177,11 @@ html,body{
   height:960px;
   z-index:2;
 
-  background:#ffffff;
-  padding:26px 34px 34px 34px;
+  background:#ffffff;                 /* full white panel */
+  padding:26px 34px 34px 34px;        /* reduced top padding (moves content up) */
   overflow:hidden;
 
-#events{
+  /* Use Arial-like system font */
   font-family: Arial, "Helvetica Neue", Helvetica, system-ui, sans-serif;
 }
 
@@ -196,23 +199,22 @@ html,body{
 }
 
 /* ==============================
-   EVENT ROWS
+   EVENT ROWS (Yodeck-like)
    ============================== */
 .event{
   background:transparent;
-  padding: 20px 0;
+  padding:20px 0;
 }
 .event + .event{
   border-top:1px solid #e5e7eb;
 }
 
-/* Title: bold, clamp to 2 lines */
 .event .title{
-  font-size: 40px;
-  font-weight: 900;
-  color: var(--ink);
-  margin-bottom: 12px;
-  line-height: 1.12;
+  font-size:40px;        /* slightly larger */
+  font-weight:700;       /* Arial bold feel */
+  color:var(--ink);
+  margin-bottom:12px;
+  line-height:1.12;
 
   display:-webkit-box;
   -webkit-box-orient:vertical;
@@ -220,15 +222,14 @@ html,body{
   overflow:hidden;
 }
 
-/* Meta lines: regular, slightly larger */
 .event .meta{
-  font-size: 26px;
-  font-weight: 400;
-  color: var(--muted);
-  line-height: 1.4;
-  margin-top: 3px;
+  font-size:26px;
+  font-weight:400;
+  color:var(--muted);
+  line-height:1.4;
+  margin-top:3px;
 
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
