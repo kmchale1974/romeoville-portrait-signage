@@ -2,50 +2,56 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Romeoville Portrait Signage</title>
+
+  <!-- Google Font: Lato (matches Yodeck look closely) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
-  <!-- Fixed 1080x1920 canvas that scales to any browser -->
-  <div id="stage" aria-label="Romeoville Signage">
+  <div id="stage">
 
-    <!-- Base layer from Illustrator (includes UPCOMING EVENTS text etc.) -->
-    <img id="baseLayer" src="assets/base-layer.png" alt="" />
+    <!-- Base layer (Illustrator export) -->
+    <img id="baseLayer" src="assets/base-layer.png" alt="">
 
-    <!-- Slideshow region: 1080x625 @ (0,0) -->
-    <section id="slideshow" aria-label="Slideshow">
-      <img id="slideA" class="slide visible" alt="" />
-      <img id="slideB" class="slide" alt="" />
+    <!-- Slideshow zone (1080x625 @ 0,0) -->
+    <div id="slideshow">
+      <img id="slideA" class="slide visible" alt="">
+      <img id="slideB" class="slide" alt="">
+    </div>
+
+    <!-- Top strip zone (padded): logo + temp + date/time -->
+    <section id="weatherWidget" aria-label="Top strip">
+      <div id="topStrip">
+        <div class="stripLeft">
+          <img id="villageLogo" src="assets/village-logo.png" alt="Village of Romeoville">
+        </div>
+
+        <div class="stripCenter">
+          <div class="weatherRow">
+            <div class="weatherIcon" id="weatherIcon">🌡</div>
+            <div class="weatherTemp" id="temp">--°F</div>
+          </div>
+        </div>
+
+        <div class="stripRight">
+          <div id="dateLine"></div>
+          <div id="timeLine"></div>
+        </div>
+      </div>
     </section>
 
-    <!-- Weather widget region: 670x209 @ (0,627) -->
-    <section id="weatherWidget" aria-label="Top strip">
-  <div id="topStrip">
-    <div class="stripLeft">
-      <img id="villageLogo" src="assets/village-logo.png" alt="Village of Romeoville" />
-    </div>
+    <!-- Divider (1080x6 @ 0,836) -->
+    <div id="divider"></div>
 
-    <div class="stripCenter">
-      <div class="weatherRow">
-        <div class="weatherIcon" id="weatherIcon">☀</div>
-        <div class="weatherTemp" id="temp">--°F</div>
-      </div>
-    </div>
-
-    <div class="stripRight">
-      <div id="dateLine">January 7th 2026</div>
-      <div id="timeLine">9:00</div>
-    </div>
-  </div>
-</section>
-    
-    <!-- White divider line: 1080x6 @ (0,836) -->
-    <div id="divider" aria-hidden="true"></div>
-
-    <!-- Events region: 1080x960 @ (0,960) -->
-    <section id="events" aria-label="Upcoming Events">
-      <div id="eventsList"></div>
+    <!-- Events zone (1080x960 @ 0,960) -->
+    <section id="events" aria-label="Upcoming events list">
+      <div id="eventsList" class="fadeIn"></div>
     </section>
 
   </div>
