@@ -175,7 +175,7 @@ html,body{
   z-index:2;
 
   background:#ffffff;
-  padding:42px 34px 34px 34px;
+  padding:26px 34px 34px 34px;
   overflow:hidden;
 
   /* Use Lato for the list to match Yodeck feel */
@@ -200,7 +200,7 @@ html,body{
    ============================== */
 .event{
   background:transparent;
-  padding: 22px 0;
+  padding: 20px 0;
 }
 .event + .event{
   border-top:1px solid #e5e7eb;
@@ -208,11 +208,11 @@ html,body{
 
 /* Title: bold, clamp to 2 lines */
 .event .title{
-  font-size: 38px;
+  font-size: 40px;
   font-weight: 900;
   color: var(--ink);
   margin-bottom: 12px;
-  line-height: 1.15;
+  line-height: 1.12;
 
   display:-webkit-box;
   -webkit-box-orient:vertical;
@@ -222,10 +222,10 @@ html,body{
 
 /* Meta lines: regular, slightly larger */
 .event .meta{
-  font-size: 24px;
+  font-size: 26px;
   font-weight: 400;
   color: var(--muted);
-  line-height: 1.45;
+  line-height: 1.4;
   margin-top: 3px;
 
   white-space: nowrap;
