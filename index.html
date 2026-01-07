@@ -5,11 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Romeoville Portrait Signage</title>
 
-  <!-- Google Font: Lato (matches Yodeck look closely) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
-
+  <!-- No external fonts: use system fonts (Arial-like) -->
   <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -17,21 +13,33 @@
   <div id="stage">
 
     <!-- Base layer (Illustrator export) -->
-    <img id="baseLayer" src="assets/base-layer.png" alt="">
+    <img
+      id="baseLayer"
+      src="assets/base-layer.png"
+      alt=""
+      aria-hidden="true"
+    />
 
     <!-- Slideshow zone (1080x625 @ 0,0) -->
-    <div id="slideshow">
+    <div id="slideshow" aria-label="Slideshow">
       <img id="slideA" class="slide visible" alt="">
       <img id="slideB" class="slide" alt="">
     </div>
 
-    <!-- Top strip zone (padded): logo + temp + date/time -->
-    <section id="weatherWidget" aria-label="Top strip">
+    <!-- Top strip: Logo | Temperature | Date & Time -->
+    <section id="weatherWidget" aria-label="Status bar">
       <div id="topStrip">
+
+        <!-- Left: Village logo -->
         <div class="stripLeft">
-          <img id="villageLogo" src="assets/village-logo.png" alt="Village of Romeoville">
+          <img
+            id="villageLogo"
+            src="assets/village-logo.png"
+            alt="Village of Romeoville"
+          />
         </div>
 
+        <!-- Center: Weather -->
         <div class="stripCenter">
           <div class="weatherRow">
             <div class="weatherIcon" id="weatherIcon">🌡</div>
@@ -39,18 +47,20 @@
           </div>
         </div>
 
+        <!-- Right: Date & Time -->
         <div class="stripRight">
           <div id="dateLine"></div>
           <div id="timeLine"></div>
         </div>
+
       </div>
     </section>
 
     <!-- Divider (1080x6 @ 0,836) -->
-    <div id="divider"></div>
+    <div id="divider" aria-hidden="true"></div>
 
-    <!-- Events zone (1080x960 @ 0,960) -->
-    <section id="events" aria-label="Upcoming events list">
+    <!-- Events area (1080x960 @ 0,960) -->
+    <section id="events" aria-label="Upcoming events">
       <div id="eventsList" class="fadeIn"></div>
     </section>
 
