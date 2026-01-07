@@ -84,8 +84,8 @@ html,body{
   display:flex;
   align-items:center;
 
-  /* Use Lato here to match Yodeck styling */
-  font-family: "Lato", Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  #weatherWidget{
+  font-family: Arial, "Helvetica Neue", Helvetica, system-ui, sans-serif;
 }
 
 #topStrip{
@@ -178,8 +178,8 @@ html,body{
   padding:26px 34px 34px 34px;
   overflow:hidden;
 
-  /* Use Lato for the list to match Yodeck feel */
-  font-family: "Lato", Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+#events{
+  font-family: Arial, "Helvetica Neue", Helvetica, system-ui, sans-serif;
 }
 
 /* fade animation */
