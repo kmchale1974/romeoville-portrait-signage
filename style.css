@@ -212,15 +212,16 @@ html,body{
 
 /* title: bold, clamp to 2 lines */
 .event .title{
-  font-size:30px;
-  font-weight:900;
-  color:var(--ink);
-  margin-bottom:8px;
+  font-size: 34px;        /* ⬆️ was 30px */
+  font-weight: 900;
+  color: var(--ink);
+  margin-bottom: 10px;
+  line-height: 1.2;
 
-  display:-webkit-box;
-  -webkit-box-orient:vertical;
-  -webkit-line-clamp:2;
-  overflow:hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
 }
 
 /* meta: regular weight */
