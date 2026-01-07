@@ -20,15 +20,25 @@
     </section>
 
     <!-- Weather widget region: 670x209 @ (0,627) -->
-    <section id="weatherWidget" aria-label="Weather">
+    <section id="weatherWidget" aria-label="Top strip">
+  <div id="topStrip">
+    <div class="stripLeft">
+      <img id="villageLogo" src="assets/village-logo.png" alt="Village of Romeoville" />
+    </div>
+
+    <div class="stripCenter">
       <div class="weatherRow">
         <div class="weatherIcon" id="weatherIcon">☀</div>
         <div class="weatherTemp" id="temp">--°F</div>
       </div>
-      <div class="weatherMeta">
-        <div class="weatherLine" id="weatherDesc">ROMEOVILLE</div>
-      </div>
-    </section>
+    </div>
+
+    <div class="stripRight">
+      <div id="dateLine">January 7th 2026</div>
+      <div id="timeLine">9:00</div>
+    </div>
+  </div>
+</section>
 
     <!-- Date widget: 465x48 @ (615,674) -->
     <section id="dateWidget" aria-label="Date">
