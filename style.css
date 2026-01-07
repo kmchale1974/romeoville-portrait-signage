@@ -69,23 +69,52 @@ html,body{
 .slide.visible{ opacity:1; }
 
 /* ==============================
-   WEATHER
+   TOP STRIP (Logo | Temp | Date/Time)
    ============================== */
 #weatherWidget{
   position:absolute;
   left:0;
   top:627px;
-  width:670px;
+  width:1080px;     /* ⬅️ span full width now */
   height:209px;
   z-index:3;
 
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-
-  padding:24px 48px;   /* even inset */
+  padding:24px 48px;  /* keep the inset you like */
   color:#fff;
   background: transparent;
+
+  display:flex;
+  align-items:center;
+}
+
+#topStrip{
+  width:100%;
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between; /* even spacing */
+  gap:24px;
+}
+
+/* Left: logo */
+.stripLeft{
+  flex:0 0 auto;
+  display:flex;
+  align-items:center;
+}
+
+#villageLogo{
+  height:120px;      /* adjust as needed */
+  width:auto;
+  display:block;
+}
+
+/* Center: temp */
+.stripCenter{
+  flex:1 1 auto;
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
 
 .weatherRow{
@@ -98,31 +127,13 @@ html,body{
 .weatherIcon{ font-size:64px; }
 .weatherTemp{ font-size:64px; font-weight:800; }
 
-.weatherMeta{ margin-top:10px; }
-.weatherLine{
-  font-size:22px;
-  opacity:.9;
-  letter-spacing:.5px;
-}
-
-/* ==============================
-   DATE
-   ============================== */
-#dateWidget{
-  position:absolute;
-  left:615px;
-  top:674px;
-  width:465px;
-  height:48px;
-  z-index:3;
-
+/* Right: date/time stacked, centered to each other */
+.stripRight{
+  flex:0 0 360px;       /* fixed block so it doesn't shift */
   display:flex;
-  align-items:center;
+  flex-direction:column;
+  align-items:center;   /* centers date & time to each other */
   justify-content:center;
-
-  color:#fff;
-  background: transparent;
-  overflow:hidden;
   text-align:center;
 }
 
@@ -134,33 +145,13 @@ html,body{
   white-space:nowrap;
 }
 
-/* ==============================
-   TIME
-   ============================== */
-#timeWidget{
-  position:absolute;
-  left:615px;
-  top:720px;
-  width:465px;
-  height:81px;
-  z-index:3;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  color:#fff;
-  background: transparent;
-  overflow:hidden;
-  text-align:center;
-}
-
 #timeLine{
   width:100%;
   text-align:center;
   font-size:34px;
   font-weight:700;
   white-space:nowrap;
+  margin-top:8px;
 }
 
 /* ==============================
