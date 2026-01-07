@@ -226,11 +226,11 @@ html,body{
 
 /* meta: regular weight */
 .event .meta{
-  font-size:20px;
-  font-weight:400;
-  color:var(--muted);
-  line-height:1.35;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
+  font-size: 22px;        /* ⬆️ was 20px */
+  font-weight: 400;
+  color: var(--muted);
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
