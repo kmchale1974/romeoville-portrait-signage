@@ -13,10 +13,10 @@ html,body{
   height:100%;
   margin:0;
   background:#000;
-  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  overflow:hidden; /* prevents any sideways layout/scroll */
 }
 
-/* Center the fixed canvas and scale it */
+/* The fixed 1080x1920 canvas */
 #stage{
   width:var(--w);
   height:var(--h);
@@ -24,9 +24,9 @@ html,body{
   left:50%;
   top:50%;
   transform: translate(-50%,-50%) scale(var(--scale));
-  transform-origin: center center;
+  transform-origin:center center;
   overflow:hidden;
-  background:#ffffff;
+  background:#000; /* shows behind if base layer missing */
 }
 
 /* Base Illustrator layer */
@@ -51,9 +51,9 @@ html,body{
   top:0;
   width:1080px;
   height:625px;
-  background:#ffffff;
   z-index:2;
   overflow:hidden;
+  background:#000;
 }
 
 #slideshowFrame{
@@ -62,21 +62,6 @@ html,body{
   border:0;
   display:block;
   background:#000;
-}
-
-#slideshowFallback{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:contain;   /* or cover if you prefer */
-  background:#000;
-  z-index:1;
-}
-
-#slideshowFrame{
-  position:relative;
-  z-index:2;
 }
 
 /* ==============================
@@ -97,7 +82,6 @@ html,body{
   display:flex;
   align-items:center;
 
-  /* Arial / system font to match Yodeck */
   font-family: Arial, "Helvetica Neue", Helvetica, system-ui, sans-serif;
 }
 
@@ -110,19 +94,17 @@ html,body{
   gap:24px;
 }
 
-/* Left: logo */
 .stripLeft{
   flex:0 0 auto;
   display:flex;
   align-items:center;
 }
 #villageLogo{
-  height:104px; /* slightly smaller */
+  height:104px;
   width:auto;
   display:block;
 }
 
-/* Center: temperature */
 .stripCenter{
   flex:1 1 auto;
   display:flex;
@@ -136,12 +118,8 @@ html,body{
   line-height:1;
 }
 .weatherIcon{ font-size:64px; }
-.weatherTemp{
-  font-size:64px;
-  font-weight:700;
-}
+.weatherTemp{ font-size:64px; font-weight:700; }
 
-/* Right: date/time */
 .stripRight{
   flex:0 0 380px;
   display:flex;
@@ -166,9 +144,7 @@ html,body{
   margin-top:8px;
 }
 
-/* ==============================
-   DIVIDER
-   ============================== */
+/* Divider */
 #divider{
   position:absolute;
   left:0;
@@ -180,7 +156,7 @@ html,body{
 }
 
 /* ==============================
-   EVENTS AREA
+   EVENTS
    ============================== */
 #events{
   position:absolute;
@@ -191,34 +167,18 @@ html,body{
   z-index:2;
 
   background:#ffffff;
-  padding:26px 34px 34px 34px; /* content moved slightly up */
+  padding:26px 34px 34px 34px;
   overflow:hidden;
 
-  /* Arial / system font */
   font-family: Arial, "Helvetica Neue", Helvetica, system-ui, sans-serif;
 }
 
-/* Fade animation */
 #eventsList{ opacity:1; }
-#eventsList.fadeOut{
-  opacity:0;
-  transition:opacity 300ms ease;
-}
-#eventsList.fadeIn{
-  opacity:1;
-  transition:opacity 500ms ease;
-}
+#eventsList.fadeOut{ opacity:0; transition:opacity 300ms ease; }
+#eventsList.fadeIn{ opacity:1; transition:opacity 500ms ease; }
 
-/* ==============================
-   EVENT ROWS (Yodeck-like)
-   ============================== */
-.event{
-  background:transparent;
-  padding:20px 0;
-}
-.event + .event{
-  border-top:1px solid #e5e7eb;
-}
+.event{ background:transparent; padding:20px 0; }
+.event + .event{ border-top:1px solid #e5e7eb; }
 
 .event .title{
   font-size:40px;
