@@ -79,6 +79,18 @@ html,body{
   z-index:2;
 }
 
+/* Covers the seam between slideshow and the blue strip */
+#seamCover{
+  position:absolute;
+  left:0;
+  top:625px;        /* seam starts right after slideshow */
+  width:1080px;
+  height:8px;       /* make it a little taller than needed */
+  background:#fff;  /* white instead of black */
+  z-index:5;        /* above base layer + slideshow */
+  pointer-events:none;
+}
+
 /* ==============================
    TOP STRIP (Logo | Temp | Date/Time)
    ============================== */
