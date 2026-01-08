@@ -59,7 +59,7 @@ html,body{
 #slideshowFrame{
   position:absolute;
   left:0;
-  top:6px;          /* ⬅️ shift iframe UP */
+  top:5px;          /* ⬅️ shift iframe UP */
   width:100%;
   height:calc(100% + 6px);  /* ⬅️ compensate height */
   border:0;
