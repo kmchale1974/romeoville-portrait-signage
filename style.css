@@ -52,16 +52,16 @@ html,body{
   width:1080px;
   height:625px;
   z-index:2;
-  overflow:hidden;   /* critical */
+  overflow:hidden;
   background:#000;
 }
 
 #slideshowFrame{
   position:absolute;
   left:0;
-  top:6px;          /* ⬅️ shift iframe UP */
+  top:6px;                 /* ✅ your working value */
   width:100%;
-  height:calc(100% + 6px);  /* ⬅️ compensate height */
+  height:calc(100% + 6px); /* ✅ fills after shifting down */
   border:0;
   display:block;
   background:#000;
