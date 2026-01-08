@@ -4,59 +4,34 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Romeoville Portrait Signage</title>
-
-  <!-- System fonts only (Yodeck-like) -->
   <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
   <div id="stage">
 
-    <!-- Base layer (Illustrator export) -->
-    <img
-      id="baseLayer"
-      src="assets/base-layer.png"
-      alt=""
-      aria-hidden="true"
-    />
+    <!-- Base layer (MAKE SURE THIS PATH MATCHES YOUR ACTUAL FILE) -->
+    <img id="baseLayer" src="assets/base-layer.jpg" alt="" aria-hidden="true" />
 
     <!-- Slideshow zone (1080x625 @ 0,0) -->
-    <div id="slideshow"> ... </div>
-    <div id="seamCover" aria-hidden="true"></div>
-    <section id="weatherWidget"> ... </section>
-
-  <!-- Fallback image (shown if iframe fails) -->
-  <img
-    id="slideshowFallback"
-    src="assets/romeoville-fallback.png"
-    alt=""
-    aria-hidden="true"
-  />
-
-  <iframe
-    id="slideshowFrame"
-    title="Slideshow"
-    src="https://kmchale1974.github.io/Yodeck-HTML-Slideshow/?manifest=images.json&refresh=60&dur=10&fade=500&captions=0"
-    loading="lazy"
-    referrerpolicy="no-referrer"
-  ></iframe>
-
-</div>
+    <div id="slideshow" aria-label="Slideshow">
+      <iframe
+        id="slideshowFrame"
+        title="Slideshow"
+        src="https://kmchale1974.github.io/Yodeck-HTML-Slideshow/?manifest=images.json&refresh=60&dur=10&fade=500&captions=0"
+        loading="lazy"
+        referrerpolicy="no-referrer"
+      ></iframe>
+    </div>
 
     <!-- Top strip: Logo | Temperature | Date & Time -->
     <section id="weatherWidget" aria-label="Status bar">
       <div id="topStrip">
 
-        <!-- Left: Village logo -->
         <div class="stripLeft">
-          <img
-            id="villageLogo"
-            src="assets/village-logo.png"
-            alt="Village of Romeoville"
-          />
+          <img id="villageLogo" src="assets/village-logo.png" alt="Village of Romeoville" />
         </div>
 
-        <!-- Center: Weather -->
         <div class="stripCenter">
           <div class="weatherRow">
             <div class="weatherIcon" id="weatherIcon">🌡</div>
@@ -64,7 +39,6 @@
           </div>
         </div>
 
-        <!-- Right: Date & Time -->
         <div class="stripRight">
           <div id="dateLine"></div>
           <div id="timeLine"></div>
@@ -76,7 +50,7 @@
     <!-- Divider (1080x6 @ 0,836) -->
     <div id="divider" aria-hidden="true"></div>
 
-    <!-- Events area (1080x960 @ 0,960) -->
+    <!-- Events (1080x960 @ 0,960) -->
     <section id="events" aria-label="Upcoming events">
       <div id="eventsList" class="fadeIn"></div>
     </section>
