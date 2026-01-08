@@ -22,14 +22,24 @@
 
     <!-- Slideshow zone (1080x625 @ 0,0) -->
     <div id="slideshow" aria-label="Slideshow">
-      <iframe
-        id="slideshowFrame"
-        title="Slideshow"
-        src="https://kmchale1974.github.io/Yodeck-HTML-Slideshow/?manifest=images.json&refresh=60&dur=10&fade=500&captions=0"
-        loading="lazy"
-        referrerpolicy="no-referrer"
-      ></iframe>
-    </div>
+
+  <!-- Fallback image (shown if iframe fails) -->
+  <img
+    id="slideshowFallback"
+    src="assets/romeoville-fallback.png"
+    alt=""
+    aria-hidden="true"
+  />
+
+  <iframe
+    id="slideshowFrame"
+    title="Slideshow"
+    src="https://kmchale1974.github.io/Yodeck-HTML-Slideshow/?manifest=images.json&refresh=60&dur=10&fade=500&captions=0"
+    loading="lazy"
+    referrerpolicy="no-referrer"
+  ></iframe>
+
+</div>
 
     <!-- Top strip: Logo | Temperature | Date & Time -->
     <section id="weatherWidget" aria-label="Status bar">
