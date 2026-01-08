@@ -52,13 +52,16 @@ html,body{
   width:1080px;
   height:625px;
   z-index:2;
-  overflow:hidden;
+  overflow:hidden;   /* critical */
   background:#000;
 }
 
 #slideshowFrame{
+  position:absolute;
+  left:0;
+  top:-6px;          /* ⬅️ shift iframe UP */
   width:100%;
-  height:100%;
+  height:calc(100% + 6px);  /* ⬅️ compensate height */
   border:0;
   display:block;
   background:#000;
