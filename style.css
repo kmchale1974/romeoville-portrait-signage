@@ -44,7 +44,7 @@ html,body{
   width:1080px;
   height:625px;
   z-index:2;          /* must be above base layer */
-  background:#000;    /* fallback */
+  background: transparent;    /* fallback */
   overflow:hidden;
 }
 
