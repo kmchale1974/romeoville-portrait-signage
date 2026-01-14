@@ -199,3 +199,22 @@ html,body{
   overflow:hidden;
   text-overflow:ellipsis;
 }
+
+/* DEBUG: make status text very visible */
+#status.status{
+  position:absolute;
+  left:0;
+  top:0;
+  right:0;
+  padding:18px 22px;
+  font: 700 28px/1.2 Arial, Helvetica, sans-serif;
+  color:#fff;
+  background: rgba(255,0,0,0.45);
+  z-index:9999;
+  pointer-events:none;
+}
+
+/* Optional: make background transparent if you pass bg=transparent */
+.slideshow{
+  background: var(--bg);
+}
