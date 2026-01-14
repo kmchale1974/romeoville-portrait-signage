@@ -16,55 +16,47 @@ html,body{
   overflow:hidden; /* prevents any sideways layout/scroll */
 }
 
-/* The fixed 1080x1920 canvas */
+/* Stage is 1080x1920 portrait canvas */
 #stage{
-  width:var(--w);
-  height:var(--h);
-  position:absolute;
-  left:50%;
-  top:50%;
-  transform: translate(-50%,-50%) scale(var(--scale));
-  transform-origin:center center;
-  overflow:hidden;
-  background:#000; /* shows behind if base layer missing */
-}
-
-/* Base Illustrator layer */
-#baseLayer{
-  position:absolute;
-  left:0;
-  top:0;
+  position:relative;
   width:1080px;
   height:1920px;
+  overflow:hidden;
+  background:#000; /* only visible if base layer missing */
+}
+
+/* Base layer always behind everything */
+#baseLayer{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
   object-fit:cover;
   z-index:0;
   pointer-events:none;
-  user-select:none;
 }
 
-/* ==============================
-   SLIDESHOW (iframe embed)
-   ============================== */
+/* Slideshow box */
 #slideshow{
   position:absolute;
   left:0;
   top:0;
   width:1080px;
   height:625px;
-  z-index:2;
+  z-index:2;          /* must be above base layer */
+  background:#000;    /* fallback */
   overflow:hidden;
-  background:#000;
 }
 
+/* Iframe must fully fill the slideshow box */
 #slideshowFrame{
   position:absolute;
-  left:0;
-  top:6px;                 /* ✅ your working value */
+  inset:0;
   width:100%;
-  height:calc(100% + 6px); /* ✅ fills after shifting down */
+  height:100%;
   border:0;
   display:block;
-  background:#000;
+  background:transparent;
 }
 
 /* ==============================
