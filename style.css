@@ -48,17 +48,25 @@ html,body{
   overflow:hidden;
 }
 
-/* Iframe must fully fill the slideshow box */
+/* Iframe must fill the slideshow box, but its content needs rotation correction */
 #slideshowFrame{
   position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
+  top:0;
+  left:0;
+
+  /* Swap dimensions because we are rotating the iframe */
+  width:625px;
+  height:1080px;
+
   border:0;
   display:block;
   background:transparent;
-}
 
+  /* Rotate the iframe content so it appears upright inside a 1080x625 window */
+  transform-origin: top left;
+  transform: rotate(90deg);
+  left:1080px; /* critical: offsets the rotated iframe back into the visible area */
+}
 /* ==============================
    TOP STRIP (Logo | Temp | Date/Time)
    ============================== */
