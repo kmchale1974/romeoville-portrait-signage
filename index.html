@@ -4,31 +4,27 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Romeoville Portrait Signage</title>
-
-  <!-- cache-bust while you're iterating (change the value when needed) -->
-  <link rel="stylesheet" href="style.css?v=1" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
   <div id="stage">
+
     <!-- Base layer -->
     <img id="baseLayer" src="assets/base-layer.png" alt="" aria-hidden="true" />
 
-    <!-- Slideshow zone -->
+    <!-- Slideshow zone (1080x625 @ 0,0) -->
     <div id="slideshow" aria-label="Slideshow">
-      <div id="slideshowInner">
-        <iframe
-          id="slideshowFrame"
-          src="https://kmchale1974.github.io/Yodeck-HTML-Slideshow/?manifest=images.json&refresh=5&dur=10&fade=500&captions=0&cb=1"
-          allow="autoplay; fullscreen"
-          allowfullscreen
-          ref depends on referrerpolicy="no-referrer"
-          loading="eager"
-        ></iframe>
-      </div>
+      <iframe
+        id="slideshowFrame"
+        src="https://kmchale1974.github.io/Yodeck-HTML-Slideshow/?manifest=images.json&refresh=5&dur=10&fade=500&captions=0"
+        allow="autoplay; fullscreen"
+        allowfullscreen
+        loading="eager"
+      ></iframe>
     </div>
 
-    <!-- Top strip -->
+    <!-- Top strip: Logo | Temperature | Date & Time -->
     <section id="weatherWidget" aria-label="Status bar">
       <div id="topStrip">
         <div class="stripLeft">
@@ -49,13 +45,14 @@
       </div>
     </section>
 
-    <!-- Divider -->
+    <!-- Divider (1080x6 @ 0,836) -->
     <div id="divider" aria-hidden="true"></div>
 
-    <!-- Events -->
+    <!-- Events (1080x960 @ 0,960) -->
     <section id="events" aria-label="Upcoming events">
       <div id="eventsList" class="fadeIn"></div>
     </section>
+
   </div>
 
   <script src="app.js"></script>
