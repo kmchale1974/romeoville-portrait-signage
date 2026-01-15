@@ -4,31 +4,33 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Romeoville Portrait Signage</title>
-  <link rel="stylesheet" href="style.css" />
+
+  <!-- cache-bust while you're iterating (change the value when needed) -->
+  <link rel="stylesheet" href="style.css?v=1" />
 </head>
 
 <body>
   <div id="stage">
-
-    <!-- Base layer (MAKE SURE THIS PATH MATCHES YOUR ACTUAL FILE) -->
+    <!-- Base layer -->
     <img id="baseLayer" src="assets/base-layer.png" alt="" aria-hidden="true" />
 
-    <!-- Slideshow zone (1080x625 @ 0,0) -->
+    <!-- Slideshow zone -->
     <div id="slideshow" aria-label="Slideshow">
-      <iframe
-        id="slideshowFrame"
-        src="https://kmchale1974.github.io/Yodeck-HTML-Slideshow/?manifest=images.json&refresh=5&dur=10&fade=500&captions=0&cb=20260113a"
-        allow="autoplay; fullscreen"
-        allowfullscreen
-        referrerpolicy="no-referrer"
-        loading="eager"
-      ></iframe>
+      <div id="slideshowInner">
+        <iframe
+          id="slideshowFrame"
+          src="https://kmchale1974.github.io/Yodeck-HTML-Slideshow/?manifest=images.json&refresh=5&dur=10&fade=500&captions=0&cb=1"
+          allow="autoplay; fullscreen"
+          allowfullscreen
+          ref depends on referrerpolicy="no-referrer"
+          loading="eager"
+        ></iframe>
+      </div>
     </div>
 
-    <!-- Top strip: Logo | Temperature | Date & Time -->
+    <!-- Top strip -->
     <section id="weatherWidget" aria-label="Status bar">
       <div id="topStrip">
-
         <div class="stripLeft">
           <img id="villageLogo" src="assets/village-logo.png" alt="Village of Romeoville" />
         </div>
@@ -44,18 +46,16 @@
           <div id="dateLine"></div>
           <div id="timeLine"></div>
         </div>
-
       </div>
     </section>
 
-    <!-- Divider (1080x6 @ 0,836) -->
+    <!-- Divider -->
     <div id="divider" aria-hidden="true"></div>
 
-    <!-- Events (1080x960 @ 0,960) -->
+    <!-- Events -->
     <section id="events" aria-label="Upcoming events">
       <div id="eventsList" class="fadeIn"></div>
     </section>
-
   </div>
 
   <script src="app.js"></script>
