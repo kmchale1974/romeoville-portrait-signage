@@ -1,10 +1,7 @@
 :root{
-  --w:1080px;
-  --h:1920px;
   --divider:#ffffff;
   --ink:#0f172a;
   --muted:#475569;
-  --scale:1;
 }
 
 *{ box-sizing:border-box; }
@@ -13,19 +10,19 @@ html,body{
   height:100%;
   margin:0;
   background:#000;
-  overflow:hidden; /* prevents any sideways layout/scroll */
+  overflow:hidden;
 }
 
-/* Stage is 1080x1920 portrait canvas */
+/* Stage: 1080x1920 portrait canvas */
 #stage{
   position:relative;
   width:1080px;
   height:1920px;
   overflow:hidden;
-  background:#000; /* only visible if base layer missing */
+  background:#000;
 }
 
-/* Base layer always behind everything */
+/* Base layer behind everything */
 #baseLayer{
   position:absolute;
   inset:0;
@@ -36,37 +33,41 @@ html,body{
   pointer-events:none;
 }
 
-/* Slideshow box */
+/* Slideshow box (visible window) */
 #slideshow{
   position:absolute;
   left:0;
   top:0;
   width:1080px;
   height:625px;
-  z-index:2;          /* must be above base layer */
-  background: transparent;    /* fallback */
+  z-index:2;
   overflow:hidden;
+  background:transparent;
 }
 
-/* Iframe must fill the slideshow box, but its content needs rotation correction */
-#slideshowFrame{
+/*
+  The slideshow app is “portrait” (1080x1920) but we’re showing only its top slice.
+  Rotate the inner wrapper so the iframe content appears correct in this 1080x625 window.
+*/
+#slideshowInner{
   position:absolute;
   top:0;
-  left:0;
+  left:1080px;            /* pull the rotated content into view */
+  width:625px;            /* swapped dims */
+  height:1080px;          /* swapped dims */
+  transform-origin: top left;
+  transform: rotate(90deg);
+}
 
-  /* Swap dimensions because we are rotating the iframe */
-  width:625px;
-  height:1080px;
-
+/* Iframe fills the rotated wrapper */
+#slideshowFrame{
+  width:100%;
+  height:100%;
   border:0;
   display:block;
   background:transparent;
-
-  /* Rotate the iframe content so it appears upright inside a 1080x625 window */
-  transform-origin: top left;
-  transform: rotate(90deg);
-  left:1080px; /* critical: offsets the rotated iframe back into the visible area */
 }
+
 /* ==============================
    TOP STRIP (Logo | Temp | Date/Time)
    ============================== */
@@ -80,7 +81,7 @@ html,body{
 
   padding:24px 48px;
   color:#fff;
-  background: transparent;
+  background:transparent;
 
   display:flex;
   align-items:center;
@@ -102,6 +103,7 @@ html,body{
   display:flex;
   align-items:center;
 }
+
 #villageLogo{
   height:104px;
   width:auto;
@@ -114,12 +116,14 @@ html,body{
   justify-content:center;
   align-items:center;
 }
+
 .weatherRow{
   display:flex;
   align-items:center;
   gap:18px;
   line-height:1;
 }
+
 .weatherIcon{ font-size:64px; }
 .weatherTemp{ font-size:64px; font-weight:700; }
 
@@ -131,16 +135,16 @@ html,body{
   justify-content:center;
   text-align:center;
 }
+
 #dateLine{
   width:100%;
-  text-align:center;
   font-size:32px;
   font-weight:700;
   white-space:nowrap;
 }
+
 #timeLine{
   width:100%;
-  text-align:center;
   font-size:38px;
   font-weight:700;
   white-space:nowrap;
@@ -154,7 +158,7 @@ html,body{
   top:836px;
   width:1080px;
   height:6px;
-  background: var(--divider);
+  background:var(--divider);
   z-index:4;
 }
 
@@ -169,7 +173,7 @@ html,body{
   height:960px;
   z-index:2;
 
-  background:#ffffff;
+  background:#fff;
   padding:26px 34px 34px 34px;
   overflow:hidden;
 
@@ -206,45 +210,4 @@ html,body{
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
-}
-
-/* DEBUG: make status text very visible */
-#status.status{
-  position:absolute;
-  left:0;
-  top:0;
-  right:0;
-  padding:18px 22px;
-  font: 700 28px/1.2 Arial, Helvetica, sans-serif;
-  color:#fff;
-  background: rgba(255,0,0,0.45);
-  z-index:9999;
-  pointer-events:none;
-}
-
-/* Optional: make background transparent if you pass bg=transparent */
-.slideshow{
-  background: var(--bg);
-}
-/* TEMP DEBUG — makes slideshow zone impossible to miss */
-#slideshow {
-  outline: 12px solid magenta !important;
-  background: rgba(255, 0, 255, 0.20) !important;
-}
-
-#slideshow::after {
-  content: "SLIDESHOW ZONE (1080x625)";
-  position: absolute;
-  left: 20px;
-  top: 20px;
-  font: 700 40px/1.1 Arial, Helvetica, sans-serif;
-  color: #fff;
-  background: rgba(0,0,0,0.55);
-  padding: 14px 18px;
-  border-radius: 12px;
-  z-index: 99999;
-}
-
-#slideshowFrame {
-  outline: 8px solid lime !important;
 }
