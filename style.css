@@ -218,3 +218,25 @@ html,body{
 .slideshow{
   background: var(--bg);
 }
+/* TEMP DEBUG — makes slideshow zone impossible to miss */
+#slideshow {
+  outline: 12px solid magenta !important;
+  background: rgba(255, 0, 255, 0.20) !important;
+}
+
+#slideshow::after {
+  content: "SLIDESHOW ZONE (1080x625)";
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  font: 700 40px/1.1 Arial, Helvetica, sans-serif;
+  color: #fff;
+  background: rgba(0,0,0,0.55);
+  padding: 14px 18px;
+  border-radius: 12px;
+  z-index: 99999;
+}
+
+#slideshowFrame {
+  outline: 8px solid lime !important;
+}
