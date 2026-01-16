@@ -39,7 +39,7 @@ html,body{
   left:0;
   top:0;
   width:1080px;
-  height:610px;
+  height:608px;
   z-index:2;
   overflow:hidden;
   background:#000; /* fallback behind iframe */
