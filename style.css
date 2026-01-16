@@ -109,7 +109,21 @@ html,body{
   gap:18px;
   line-height:1;
 }
-.weatherIcon{ font-size:64px; }
+.weatherIcon{
+  width:64px;
+  height:64px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex:0 0 auto;
+}
+
+.weatherIcon svg{
+  width:64px;
+  height:64px;
+  display:block;
+}
+
 .weatherTemp{ font-size:64px; font-weight:700; }
 
 .stripRight{
