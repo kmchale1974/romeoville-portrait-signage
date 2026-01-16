@@ -45,11 +45,12 @@ function tickClock(){
 
   if (dateEl) dateEl.textContent = formatDateWithOrdinal(now);
   if (timeEl) {
-    timeEl.textContent = now.toLocaleTimeString([], {
-      hour: 'numeric',
-      minute: '2-digit'
-    });
-  }
+  timeEl.textContent = now.toLocaleTimeString('en-US', {
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true
+  });
+}
 }
 tickClock();
 setInterval(tickClock, 1000);
