@@ -55,7 +55,7 @@ tickClock();
 setInterval(tickClock, 1000);
 
 // ==============================
-// 4) Weather (from data/weather.json)
+// 4) Weather (from data/weather.json) + SVG icon (no emoji)
 // ==============================
 async function loadWeather(){
   const tempEl = document.getElementById('temp');
@@ -63,13 +63,113 @@ async function loadWeather(){
   const descEl = document.getElementById('weatherDesc');
   if (!tempEl || !iconEl) return;
 
-  function iconFromCode(code){
-    return (code === 0) ? "☀" :
-      ([1,2,3].includes(code)) ? "⛅" :
-      ([45,48].includes(code)) ? "🌫" :
-      ([51,53,55,61,63,65,80,81,82].includes(code)) ? "🌧" :
-      ([71,73,75,77,85,86].includes(code)) ? "❄" :
-      ([95,96,99].includes(code)) ? "⛈" : "🌡";
+  function svgIcon(kind){
+    // simple, bold, Pi-friendly inline SVGs (stroke-based)
+    // Uses currentColor so you can style iconEl color via CSS if desired.
+    const common = `fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"`;
+    const wrap = (inner) =>
+      `<svg viewBox="0 0 64 64" role="img" aria-label="${kind}">${inner}</svg>`;
+
+    // Sun
+    const sun = wrap(`
+      <g ${common}>
+        <circle cx="32" cy="32" r="10"></circle>
+        <path d="M32 6v8M32 50v8M6 32h8M50 32h8"></path>
+        <path d="M13 13l6 6M45 45l6 6M51 13l-6 6M19 45l-6 6"></path>
+      </g>
+    `);
+
+    // Cloud
+    const cloud = wrap(`
+      <g ${common}>
+        <path d="M20 44h26a10 10 0 0 0 0-20 14 14 0 0 0-27-3A11 11 0 0 0 20 44z"></path>
+      </g>
+    `);
+
+    // Partly cloudy
+    const partly = wrap(`
+      <g ${common}>
+        <path d="M24 14a8 8 0 0 1 8-8"></path>
+        <circle cx="22" cy="22" r="7"></circle>
+        <path d="M22 7v4M22 33v4M7 22h4M33 22h4"></path>
+        <path d="M14 14l3 3M27 27l3 3M30 14l-3 3M17 27l-3 3"></path>
+        <path d="M22 46h26a9 9 0 0 0 0-18 13 13 0 0 0-25-2A10 10 0 0 0 22 46z"></path>
+      </g>
+    `);
+
+    // Fog
+    const fog = wrap(`
+      <g ${common}>
+        <path d="M14 26h36"></path>
+        <path d="M10 34h44"></path>
+        <path d="M14 42h36"></path>
+      </g>
+    `);
+
+    // Rain
+    const rain = wrap(`
+      <g ${common}>
+        <path d="M18 40h28a9 9 0 0 0 0-18 13 13 0 0 0-25-2A10 10 0 0 0 18 40z"></path>
+        <path d="M22 44l-3 8"></path>
+        <path d="M32 44l-3 8"></path>
+        <path d="M42 44l-3 8"></path>
+      </g>
+    `);
+
+    // Snow
+    const snow = wrap(`
+      <g ${common}>
+        <path d="M18 38h28a9 9 0 0 0 0-18 13 13 0 0 0-25-2A10 10 0 0 0 18 38z"></path>
+        <path d="M24 46h0"></path><path d="M32 46h0"></path><path d="M40 46h0"></path>
+        <circle cx="24" cy="48" r="2"></circle>
+        <circle cx="32" cy="52" r="2"></circle>
+        <circle cx="40" cy="48" r="2"></circle>
+      </g>
+    `);
+
+    // Thunder
+    const thunder = wrap(`
+      <g ${common}>
+        <path d="M18 38h28a9 9 0 0 0 0-18 13 13 0 0 0-25-2A10 10 0 0 0 18 38z"></path>
+        <path d="M30 38l-6 12h7l-3 10 12-18h-7l3-4z"></path>
+      </g>
+    `);
+
+    // Default thermometer
+    const thermo = wrap(`
+      <g ${common}>
+        <path d="M30 14a6 6 0 0 1 12 0v20a10 10 0 1 1-12 0V14z"></path>
+        <path d="M36 18v22"></path>
+      </g>
+    `);
+
+    switch(kind){
+      case "sun": return sun;
+      case "cloud": return cloud;
+      case "partly": return partly;
+      case "fog": return fog;
+      case "rain": return rain;
+      case "snow": return snow;
+      case "thunder": return thunder;
+      default: return thermo;
+    }
+  }
+
+  function kindFromCode(code){
+    // Open-Meteo weather codes:
+    // 0 clear, 1-3 mainly clear/partly/overcast
+    // 45/48 fog
+    // 51-67 drizzle/rain, 80-82 rain showers
+    // 71-77 snow, 85-86 snow showers
+    // 95/96/99 thunderstorm
+    const c = Number(code ?? 0);
+    if (c === 0) return "sun";
+    if ([1,2,3].includes(c)) return "partly";
+    if ([45,48].includes(c)) return "fog";
+    if ([51,53,55,56,57,61,63,65,66,67,80,81,82].includes(c)) return "rain";
+    if ([71,73,75,77,85,86].includes(c)) return "snow";
+    if ([95,96,99].includes(c)) return "thunder";
+    return "thermo";
   }
 
   try{
@@ -80,11 +180,17 @@ async function loadWeather(){
     if (j?.temp_f == null) throw new Error("weather.json missing temp_f");
 
     tempEl.textContent = `${j.temp_f}°F`;
-    iconEl.textContent = iconFromCode(Number(j.weather_code ?? 0));
+
+    const kind = kindFromCode(j.weather_code);
+    iconEl.innerHTML = svgIcon(kind);
+    iconEl.style.color = "#ffffff"; // icon color (matches your white strip)
+
     if (descEl) descEl.textContent = "ROMEOVILLE";
   }catch(e){
     console.warn(e);
     tempEl.textContent = "N/A";
+    iconEl.innerHTML = svgIcon("thermo");
+    iconEl.style.color = "#ffffff";
   }
 }
 
