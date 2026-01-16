@@ -39,7 +39,7 @@ html,body{
   left:0;
   top:0;
   width:1080px;
-  height:625px;
+  height:631px;
   z-index:2;
   overflow:hidden;
   background:#000; /* fallback behind iframe */
@@ -62,7 +62,7 @@ html,body{
 #weatherWidget{
   position:absolute;
   left:0;
-  top:627px;
+  top:633px;
   width:1080px;
   height:209px;
   z-index:3;
@@ -140,7 +140,7 @@ html,body{
 #divider{
   position:absolute;
   left:0;
-  top:836px;
+  top:842px;
   width:1080px;
   height:6px;
   background: var(--divider);
