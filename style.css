@@ -21,15 +21,20 @@ html,body{
 
 /* Stage is 1080x1920 portrait canvas */
 #stage{
-  position:relative;
+  position:absolute;
+  left:50%;
+  top:50%;
   width:1080px;
   height:1920px;
   overflow:hidden;
   background:#000;
 
-  /* Overscan compensation */
-  transform-origin: top left;
-  transform: translate(var(--safeX), var(--safeY)) scale(var(--safeScale));
+  /* Center in the screen, then apply overscan scale */
+  transform-origin:center center;
+  transform:
+    translate(-50%, -50%)
+    translate(var(--safeX), var(--safeY))
+    scale(var(--safeScale));
 }
 
 /* Base layer always behind everything */
