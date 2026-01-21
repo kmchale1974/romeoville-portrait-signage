@@ -5,7 +5,7 @@
 
   /* Overscan compensation (Option C)
      1.00 = normal size, 0.97 zooms OUT ~3% so edges don't get cut off */
-  --safeScale: 0.97;
+  --safeScale: 0.90;
   --safeX: 0px;
   --safeY: 0px;
 }
