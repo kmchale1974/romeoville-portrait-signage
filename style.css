@@ -2,6 +2,12 @@
   --divider:#ffffff;
   --ink:#0f172a;
   --muted:#475569;
+
+  /* Overscan compensation (Option C)
+     1.00 = normal size, 0.97 zooms OUT ~3% so edges don't get cut off */
+  --safeScale: 0.97;
+  --safeX: 0px;
+  --safeY: 0px;
 }
 
 *{ box-sizing:border-box; }
@@ -20,6 +26,10 @@ html,body{
   height:1920px;
   overflow:hidden;
   background:#000;
+
+  /* Overscan compensation */
+  transform-origin: top left;
+  transform: translate(var(--safeX), var(--safeY)) scale(var(--safeScale));
 }
 
 /* Base layer always behind everything */
@@ -39,7 +49,7 @@ html,body{
   left:0;
   top:0;
   width:1080px;
-  height:608px;
+  height:608px; /* (you previously used 610 to remove the gap; keep 608 here unless you want 610) */
   z-index:2;
   overflow:hidden;
   background:#000; /* fallback behind iframe */
@@ -91,6 +101,7 @@ html,body{
   display:flex;
   align-items:center;
 }
+
 #villageLogo{
   height:104px;
   width:auto;
@@ -103,12 +114,14 @@ html,body{
   justify-content:center;
   align-items:center;
 }
+
 .weatherRow{
   display:flex;
   align-items:center;
   gap:18px;
   line-height:1;
 }
+
 .weatherIcon{
   width:64px;
   height:64px;
@@ -124,7 +137,10 @@ html,body{
   display:block;
 }
 
-.weatherTemp{ font-size:64px; font-weight:700; }
+.weatherTemp{
+  font-size:64px;
+  font-weight:700;
+}
 
 .stripRight{
   flex:0 0 380px;
@@ -134,6 +150,7 @@ html,body{
   justify-content:center;
   text-align:center;
 }
+
 #dateLine{
   width:100%;
   text-align:center;
@@ -141,6 +158,7 @@ html,body{
   font-weight:700;
   white-space:nowrap;
 }
+
 #timeLine{
   width:100%;
   text-align:center;
