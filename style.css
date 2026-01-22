@@ -185,7 +185,7 @@ html,body{
 #dividerTop{
   position:absolute;
   left:0;
-  top:620px;           /* exactly slideshow height */
+  top:613px;           /* exactly slideshow height */
   width:1080px;
   height:6px;
   background:var(--divider);
