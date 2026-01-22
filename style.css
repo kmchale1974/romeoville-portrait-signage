@@ -7,7 +7,7 @@
   --stage-scale: 0.98;
 
   /* Slideshow-only fine tuning */
-  --slideshow-scale: 0.98;
+  --slideshow-scale: 0.97;
 }
 
 /* ==============================
@@ -59,9 +59,9 @@ html,body{
    ============================== */
 #slideshow{
   position:absolute;
-  left:15;
+  left:0;
   top:8;
-  width:1070px;
+  width:1080px;
   height:608px;
   z-index:2;
 
