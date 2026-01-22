@@ -92,18 +92,7 @@ html,body{
   display:block;
   background:#000;
 }
-/* ==============================
-   DIVIDER
-   ============================== */
-#divider{
-  position:absolute;
-  left:0;
-  top:650px;
-  width:1080px;
-  height:6px;
-  background:var(--divider);
-  z-index:4;
-}
+
 /* ==============================
    TOP STRIP (Weather / Logo / Time)
    ============================== */
@@ -192,10 +181,19 @@ html,body{
   margin-top:8px;
 }
 
-/* ==============================
-   DIVIDER
-   ============================== */
-#divider{
+/* Line just below slideshow */
+#dividerTop{
+  position:absolute;
+  left:0;
+  top:610px;           /* exactly slideshow height */
+  width:1080px;
+  height:6px;
+  background:var(--divider);
+  z-index:5;           /* above slideshow */
+}
+
+/* Existing line above UPCOMING EVENTS area (keep where you want it) */
+#dividerEvents{
   position:absolute;
   left:0;
   top:842px;
