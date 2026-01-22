@@ -80,7 +80,7 @@ html,body{
   height:610px;
 
   /* --- controls --- */
-  transform: translate(0px, 0px) scale(0.98);  /* shrink + nudge */
+  transform: translate(0px, 10px) scale(0.98);  /* shrink + nudge */
   transform-origin:center center;
 }
 
