@@ -98,7 +98,7 @@ html,body{
 #divider{
   position:absolute;
   left:0;
-  top:842px;
+  top:610px;
   width:1080px;
   height:6px;
   background:var(--divider);
