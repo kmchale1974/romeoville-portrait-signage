@@ -13,25 +13,27 @@
     <!-- Base layer -->
     <img id="baseLayer" src="assets/base-layer.png" alt="" aria-hidden="true" />
 
-    <!-- Slideshow zone (1080x625 @ 0,0) -->
+    <!-- Slideshow zone -->
     <div id="slideshow" aria-label="Slideshow">
-  <div id="slideshowInner">
-    <iframe
-      id="slideshowFrame"
-      src="https://kmchale1974.github.io/Yodeck-HTML-Slideshow/?manifest=images.json&refresh=5&dur=10&fade=500&captions=0"
-      allow="autoplay; fullscreen"
-      allowfullscreen
-      referrerpolicy="no-referrer"
-      loading="eager"
-    ></iframe>
-  </div>
-  <!-- Divider (1080x6 @ 0,836) -->
-  <div id="divider" aria-hidden="true"></div>    
-</div>
-  
+      <div id="slideshowInner">
+        <iframe
+          id="slideshowFrame"
+          src="https://kmchale1974.github.io/Yodeck-HTML-Slideshow/?manifest=images.json&refresh=5&dur=10&fade=500&captions=0"
+          allow="autoplay; fullscreen"
+          allowfullscreen
+          referrerpolicy="no-referrer"
+          loading="eager"
+        ></iframe>
+      </div>
+    </div>
+
+    <!-- Line just below slideshow -->
+    <div id="dividerTop" aria-hidden="true"></div>
+
     <!-- Top strip: Logo | Temperature | Date & Time -->
     <section id="weatherWidget" aria-label="Status bar">
       <div id="topStrip">
+
         <div class="stripLeft">
           <img id="villageLogo" src="assets/village-logo.png" alt="Village of Romeoville" />
         </div>
@@ -47,13 +49,14 @@
           <div id="dateLine"></div>
           <div id="timeLine"></div>
         </div>
+
       </div>
     </section>
 
-    <!-- Divider (1080x6 @ 0,836) -->
-    <div id="divider" aria-hidden="true"></div>
+    <!-- Existing divider above UPCOMING EVENTS area -->
+    <div id="dividerEvents" aria-hidden="true"></div>
 
-    <!-- Events (1080x960 @ 0,960) -->
+    <!-- Events -->
     <section id="events" aria-label="Upcoming events">
       <div id="eventsList" class="fadeIn"></div>
     </section>
