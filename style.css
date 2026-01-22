@@ -92,7 +92,18 @@ html,body{
   display:block;
   background:#000;
 }
-
+/* ==============================
+   DIVIDER
+   ============================== */
+#divider{
+  position:absolute;
+  left:0;
+  top:842px;
+  width:1080px;
+  height:6px;
+  background:var(--divider);
+  z-index:4;
+}
 /* ==============================
    TOP STRIP (Weather / Logo / Time)
    ============================== */
