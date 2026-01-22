@@ -60,7 +60,7 @@ html,body{
 #slideshow{
   position:absolute;
   left:0;
-  top:0;
+  top:8;
   width:1080px;
   height:608px;
   z-index:2;
