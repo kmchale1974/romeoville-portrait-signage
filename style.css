@@ -3,13 +3,16 @@
   --ink:#0f172a;
   --muted:#475569;
 
-  /* Overscan compensation (Option C)
-     1.00 = normal size, 0.97 zooms OUT ~3% so edges don't get cut off */
-  --safeScale: 0.98;
-  --safeX: 0px;
-  --safeY: 0px;
+  /* GLOBAL overscan safety (entire canvas) */
+  --stage-scale: 0.98;
+
+  /* Slideshow-only fine tuning */
+  --slideshow-scale: 0.985;
 }
 
+/* ==============================
+   GLOBAL
+   ============================== */
 *{ box-sizing:border-box; }
 
 html,body{
@@ -19,25 +22,28 @@ html,body{
   overflow:hidden;
 }
 
-/* Stage is 1080x1920 portrait canvas */
+/* ==============================
+   STAGE (1080 × 1920)
+   ============================== */
 #stage{
   position:absolute;
   left:50%;
   top:50%;
   width:1080px;
   height:1920px;
-  overflow:hidden;
-  background:#000;
 
-  /* Center in the screen, then apply overscan scale */
   transform-origin:center center;
   transform:
     translate(-50%, -50%)
-    translate(var(--safeX), var(--safeY))
-    scale(var(--safeScale));
+    scale(var(--stage-scale));
+
+  overflow:hidden;
+  background:#000;
 }
 
-/* Base layer always behind everything */
+/* ==============================
+   BASE LAYER
+   ============================== */
 #baseLayer{
   position:absolute;
   inset:0;
@@ -48,19 +54,26 @@ html,body{
   pointer-events:none;
 }
 
-/* Slideshow box */
+/* ==============================
+   SLIDESHOW
+   ============================== */
 #slideshow{
   position:absolute;
   left:0;
   top:0;
   width:1080px;
-  height:608px; /* (you previously used 610 to remove the gap; keep 608 here unless you want 610) */
+  height:610px;
   z-index:2;
+
   overflow:hidden;
-  background:#000; /* fallback behind iframe */
+  background:#000;
+
+  /* Slideshow-only overscan trim */
+  transform-origin:center center;
+  transform: scale(var(--slideshow-scale));
 }
 
-/* Iframe must fully fill slideshow box */
+/* Iframe fills slideshow exactly */
 #slideshowFrame{
   position:absolute;
   inset:0;
@@ -72,7 +85,7 @@ html,body{
 }
 
 /* ==============================
-   TOP STRIP (Logo | Temp | Date/Time)
+   TOP STRIP (Weather / Logo / Time)
    ============================== */
 #weatherWidget{
   position:absolute;
@@ -84,11 +97,10 @@ html,body{
 
   padding:24px 48px;
   color:#fff;
-  background: transparent;
+  background:transparent;
 
   display:flex;
   align-items:center;
-
   font-family: Arial, "Helvetica Neue", Helvetica, system-ui, sans-serif;
 }
 
@@ -101,86 +113,75 @@ html,body{
   gap:24px;
 }
 
+/* Logo */
 .stripLeft{
-  flex:0 0 auto;
   display:flex;
   align-items:center;
 }
-
 #villageLogo{
   height:104px;
   width:auto;
-  display:block;
 }
 
+/* Weather */
 .stripCenter{
-  flex:1 1 auto;
+  flex:1;
   display:flex;
   justify-content:center;
   align-items:center;
 }
-
 .weatherRow{
   display:flex;
   align-items:center;
   gap:18px;
-  line-height:1;
 }
-
 .weatherIcon{
   width:64px;
   height:64px;
   display:flex;
   align-items:center;
   justify-content:center;
-  flex:0 0 auto;
 }
-
 .weatherIcon svg{
   width:64px;
   height:64px;
-  display:block;
 }
-
 .weatherTemp{
   font-size:64px;
   font-weight:700;
 }
 
+/* Date / Time */
 .stripRight{
-  flex:0 0 380px;
+  width:380px;
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
   text-align:center;
 }
-
 #dateLine{
-  width:100%;
-  text-align:center;
   font-size:32px;
   font-weight:700;
   white-space:nowrap;
 }
-
 #timeLine{
-  width:100%;
-  text-align:center;
   font-size:38px;
   font-weight:700;
   white-space:nowrap;
   margin-top:8px;
 }
 
-/* Divider */
+/* ==============================
+   DIVIDER
+   ============================== */
 #divider{
   position:absolute;
   left:0;
   top:842px;
   width:1080px;
   height:6px;
-  background: var(--divider);
+  background:var(--divider);
   z-index:4;
 }
 
@@ -206,7 +207,7 @@ html,body{
 #eventsList.fadeOut{ opacity:0; transition:opacity 300ms ease; }
 #eventsList.fadeIn{ opacity:1; transition:opacity 500ms ease; }
 
-.event{ background:transparent; padding:20px 0; }
+.event{ padding:20px 0; }
 .event + .event{ border-top:1px solid #e5e7eb; }
 
 .event .title{
@@ -224,11 +225,8 @@ html,body{
 
 .event .meta{
   font-size:26px;
-  font-weight:400;
   color:var(--muted);
   line-height:1.4;
-  margin-top:3px;
-
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
