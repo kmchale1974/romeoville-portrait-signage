@@ -57,31 +57,40 @@ html,body{
 /* ==============================
    SLIDESHOW
    ============================== */
+/* Slideshow box */
 #slideshow{
   position:absolute;
-  left:6;
-  top:8;
+  left:0;
+  top:0;
   width:1080px;
-  height:608px;
+  height:610px;          /* your gap-free height */
   z-index:2;
-
   overflow:hidden;
   background:#000;
-
-  /* Slideshow-only overscan trim */
-  transform-origin:center center;
-  transform: scale(var(--slideshow-scale));
+  
+  /* Center whatever is inside */
+  display:flex;
+  align-items:center;    /* vertical center */
+  justify-content:center;/* horizontal center */
 }
 
-/* Iframe fills slideshow exactly */
+/* This is the thing we shrink */
+#slideshowInner{
+  width:1080px;
+  height:610px;
+
+  /* --- controls --- */
+  transform: translate(0px, 6px) scale(0.96);  /* shrink + nudge */
+  transform-origin:center center;
+}
+
+/* Iframe fills inner exactly */
 #slideshowFrame{
-  position:absolute;
-  inset:0;
   width:100%;
   height:100%;
   border:0;
   display:block;
-  background:#113150;
+  background:#000;
 }
 
 /* ==============================
