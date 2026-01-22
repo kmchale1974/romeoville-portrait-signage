@@ -7,7 +7,7 @@
   --stage-scale: 0.98;
 
   /* Slideshow-only fine tuning */
-  --slideshow-scale: 0.975;
+  --slideshow-scale: 0.98;
 }
 
 /* ==============================
@@ -81,7 +81,7 @@ html,body{
   height:100%;
   border:0;
   display:block;
-  background:#000;
+  background:#113150;
 }
 
 /* ==============================
